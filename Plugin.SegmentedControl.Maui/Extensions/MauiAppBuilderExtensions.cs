@@ -7,7 +7,7 @@
 #if (ANDROID || IOS)
             builder.ConfigureMauiHandlers(handlers =>
             {
-                //handlers.AddHandler<..., ...Handler>();
+                handlers.AddHandler(typeof(SegmentedControl), typeof(SegmentedControlHandler));
             });
 #endif
 

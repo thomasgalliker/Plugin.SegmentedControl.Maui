@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:SegmentedControlDemoApp.Controls"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:s="http://plugin.segmentedControl.maui"
     xmlns:vm="clr-namespace:SegmentedControlDemoApp.ViewModels"
     x:Class="SegmentedControlDemoApp.Views.MainPage"
     Title="SegmentedControl .NET MAUI"
@@ -36,6 +37,20 @@
                     Grid.Column="1"
                     Text="MAUI sample app for SegmentedControl demonstration. This sample app is used to demonstrate and test the main features of the nuget package Plugin.SegmentedControl.Maui." />
             </Grid>
+
+            <controls:DividerLine />
+            <!--<s:SegmentedControl
+                SelectedTextColor="White"
+                TextColor="Black"
+                TintColor="Red"
+                WidthRequest="{OnPlatform Android=350}"
+                HorizontalOptions="Fill">
+                <s:SegmentedControl.Children>
+                    <s:SegmentedControlOption Text="Tab1" />
+                    <s:SegmentedControlOption Text="Tab2" />
+                    <s:SegmentedControlOption Text="Tab3" />
+                </s:SegmentedControl.Children>
+            </s:SegmentedControl>-->
 
             <controls:DividerLine />
 
