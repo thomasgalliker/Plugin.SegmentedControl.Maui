@@ -201,29 +201,47 @@ namespace Plugin.SegmentedControl.Maui
             set => this.SetValue(SelectedTextColorProperty, value);
         }
 
-        public static readonly BindableProperty DisabledBackgroundColorProperty = BindableProperty.Create(nameof(DisabledBackgroundColor), typeof(Color), typeof(SegmentedControl), Colors.Gray);
+        public static readonly BindableProperty DisabledBackgroundColorProperty = BindableProperty.Create(
+            nameof(DisabledBackgroundColor),
+            typeof(Color),
+            typeof(SegmentedControl),
+            Colors.Gray);
+
         public Color DisabledBackgroundColor
         {
-            get { return (Color)this.GetValue(DisabledBackgroundColorProperty); }
-            set { this.SetValue(DisabledBackgroundColorProperty, value); }
+            get => (Color)this.GetValue(DisabledBackgroundColorProperty);
+            set => this.SetValue(DisabledBackgroundColorProperty, value);
         }
 
-        public static readonly BindableProperty DisabledTintColorProperty = BindableProperty.Create(nameof(DisabledTintColor), typeof(Color), typeof(SegmentedControl), Colors.Gray);
+        public static readonly BindableProperty DisabledTintColorProperty = BindableProperty.Create(
+            nameof(DisabledTintColor),
+            typeof(Color),
+            typeof(SegmentedControl),
+            Colors.Gray);
+
         public Color DisabledTintColor
         {
-            get { return (Color)this.GetValue(DisabledTintColorProperty); }
-            set { this.SetValue(DisabledTintColorProperty, value); }
+            get => (Color)this.GetValue(DisabledTintColorProperty);
+            set => this.SetValue(DisabledTintColorProperty, value);
         }
 
-        public static readonly BindableProperty DisabledTextColorProperty = BindableProperty.Create(nameof(DisabledTextColor), typeof(Color), typeof(SegmentedControl), Colors.Gray);
+        public static readonly BindableProperty DisabledTextColorProperty = BindableProperty.Create(
+            nameof(DisabledTextColor),
+            typeof(Color),
+            typeof(SegmentedControl),
+            Colors.Gray);
+
         public Color DisabledTextColor
         {
-            get { return (Color)this.GetValue(DisabledTextColorProperty); }
-            set { this.SetValue(DisabledTextColorProperty, value); }
+            get => (Color)this.GetValue(DisabledTextColorProperty);
+            set => this.SetValue(DisabledTextColorProperty, value);
         }
 
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(
-            nameof(BorderColor), typeof(Color), typeof(SegmentedControl), defaultValueCreator: bindable => ((SegmentedControl)bindable).TintColor);
+            nameof(BorderColor),
+            typeof(Color),
+            typeof(SegmentedControl),
+            defaultValueCreator: bindable => ((SegmentedControl)bindable).TintColor);
 
         public Color BorderColor
         {
@@ -330,8 +348,6 @@ namespace Plugin.SegmentedControl.Maui
                     this.SegmentSelectedCommand.Execute(this.SegmentSelectedCommandParameter);
                 }
             }
-
-
         }
 
         protected override void OnBindingContextChanged()

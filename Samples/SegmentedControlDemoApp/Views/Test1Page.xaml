@@ -23,11 +23,9 @@
                 OnSegmentSelected="SegmentedControl_OnSegmentSelected"
                 WidthRequest="160"
                 HorizontalOptions="Start">
-                <s:SegmentedControl.Children>
-                    <s:SegmentedControlOption Text="Tab1" />
-                    <s:SegmentedControlOption Text="Tab2" />
-                    <s:SegmentedControlOption Text="Tab3" />
-                </s:SegmentedControl.Children>
+                <s:SegmentedControlOption Text="Tab1" />
+                <s:SegmentedControlOption Text="Tab2" />
+                <s:SegmentedControlOption Text="Tab3" />
             </s:SegmentedControl>
 
         </VerticalStackLayout>
