@@ -58,7 +58,7 @@ namespace Plugin.SegmentedControl.Maui
             set => this.SetValue(ItemsSourceProperty, value);
         }
 
-        private void OnItemsSourceChanged()
+        private void OnItemsSourcePropertyChanged()
         {
             var itemsSource = this.ItemsSource;
             var items = itemsSource as IList;
@@ -78,7 +78,7 @@ namespace Plugin.SegmentedControl.Maui
                 if (textValues != null)
                 {
                     this.Children = new List<SegmentedControlOption>(textValues.Select(child => new SegmentedControlOption { Text = child }));
-                    this.OnSelectedItemChanged(true);
+                    this.OnSelectedItemPropertyChanged(true);
                 }
                 else
                 {
@@ -92,7 +92,7 @@ namespace Plugin.SegmentedControl.Maui
                         }
 
                         this.Children = newChildren;
-                        this.OnSelectedItemChanged(true);
+                        this.OnSelectedItemPropertyChanged(true);
                     }
                 }
             }
@@ -104,19 +104,19 @@ namespace Plugin.SegmentedControl.Maui
 
             if (propertyName == nameof(this.ItemsSource) || propertyName == nameof(this.TextPropertyName))
             {
-                this.OnItemsSourceChanged();
+                this.OnItemsSourcePropertyChanged();
             }
             else if (propertyName == nameof(this.SelectedItem))
             {
-                this.OnSelectedItemChanged();
+                this.OnSelectedItemPropertyChanged();
             }
             else if (propertyName == nameof(this.SelectedSegment))
             {
-                this.OnSelectedSegmentChanged();
+                this.OnSelectedSegmentPropertyChanged();
             }
         }
 
-        private void OnSelectedSegmentChanged()
+        private void OnSelectedSegmentPropertyChanged()
         {
             var segmentIndex = this.SelectedSegment;
             if (segmentIndex >= 0 && segmentIndex < this.Children.Count && this.SelectedItem != this.Children[segmentIndex].Item)
@@ -125,7 +125,7 @@ namespace Plugin.SegmentedControl.Maui
             }
         }
 
-        private void OnSelectedItemChanged(bool forceUpdateSelectedSegment = false)
+        private void OnSelectedItemPropertyChanged(bool forceUpdateSelectedSegment = false)
         {
             if (this.TextPropertyName != null)
             {
@@ -144,7 +144,7 @@ namespace Plugin.SegmentedControl.Maui
                     }
                     else if (forceUpdateSelectedSegment)
                     {
-                        this.OnSelectedSegmentChanged();
+                        this.OnSelectedSegmentPropertyChanged();
                     }
                 }
                 else if (selectedIndex != this.SelectedSegment)
@@ -201,16 +201,25 @@ namespace Plugin.SegmentedControl.Maui
             set => this.SetValue(SelectedTextColorProperty, value);
         }
 
-        public static readonly BindableProperty DisabledColorProperty = BindableProperty.Create(
-            nameof(DisabledColor),
-            typeof(Color),
-            typeof(SegmentedControl),
-            Colors.Gray);
-
-        public Color DisabledColor
+        public static readonly BindableProperty DisabledBackgroundColorProperty = BindableProperty.Create(nameof(DisabledBackgroundColor), typeof(Color), typeof(SegmentedControl), Colors.Gray);
+        public Color DisabledBackgroundColor
         {
-            get => (Color)this.GetValue(DisabledColorProperty);
-            set => this.SetValue(DisabledColorProperty, value);
+            get { return (Color)this.GetValue(DisabledBackgroundColorProperty); }
+            set { this.SetValue(DisabledBackgroundColorProperty, value); }
+        }
+
+        public static readonly BindableProperty DisabledTintColorProperty = BindableProperty.Create(nameof(DisabledTintColor), typeof(Color), typeof(SegmentedControl), Colors.Gray);
+        public Color DisabledTintColor
+        {
+            get { return (Color)this.GetValue(DisabledTintColorProperty); }
+            set { this.SetValue(DisabledTintColorProperty, value); }
+        }
+
+        public static readonly BindableProperty DisabledTextColorProperty = BindableProperty.Create(nameof(DisabledTextColor), typeof(Color), typeof(SegmentedControl), Colors.Gray);
+        public Color DisabledTextColor
+        {
+            get { return (Color)this.GetValue(DisabledTextColorProperty); }
+            set { this.SetValue(DisabledTextColorProperty, value); }
         }
 
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(
@@ -307,14 +316,22 @@ namespace Plugin.SegmentedControl.Maui
             set => this.SetValue(FontFamilyProperty, value);
         }
 
-        internal void RaiseSelectionChanged()
+        internal void RaiseSelectionChanged(int segment)
         {
-            OnSegmentSelected?.Invoke(this, new SegmentSelectEventArgs { NewValue = this.SelectedSegment });
-
-            if (!(this.SegmentSelectedCommand is null) && this.SegmentSelectedCommand.CanExecute(this.SegmentSelectedCommandParameter))
+            if (this.IsEnabled &&
+                segment >= 0 &&
+                segment < this.Children.Count &&
+                this.Children[segment].IsEnabled)
             {
-                this.SegmentSelectedCommand.Execute(this.SegmentSelectedCommandParameter);
+                OnSegmentSelected?.Invoke(this, new SegmentSelectEventArgs { NewValue = segment });
+
+                if (!(this.SegmentSelectedCommand is null) && this.SegmentSelectedCommand.CanExecute(this.SegmentSelectedCommandParameter))
+                {
+                    this.SegmentSelectedCommand.Execute(this.SegmentSelectedCommandParameter);
+                }
             }
+
+
         }
 
         protected override void OnBindingContextChanged()

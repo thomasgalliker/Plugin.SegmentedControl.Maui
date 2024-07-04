@@ -18,11 +18,11 @@
                 Style="{StaticResource Heading2LabelStyle}"
                 Text="Example with segement options defined in XAML" />
 
-            <!--  TODO: Remove WidthRequest!!  -->
             <s:SegmentedControl
                 OnElementChildrenChanging="SegmentedControl_OnElementChildrenChanging"
                 OnSegmentSelected="SegmentedControl_OnSegmentSelected"
-                WidthRequest="{OnPlatform Android=320}">
+                WidthRequest="160"
+                HorizontalOptions="Start">
                 <s:SegmentedControl.Children>
                     <s:SegmentedControlOption Text="Tab1" />
                     <s:SegmentedControlOption Text="Tab2" />

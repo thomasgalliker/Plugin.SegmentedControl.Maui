@@ -17,11 +17,10 @@
             <Label Text="Example with data binding string values to ItemsSource and SelectedSegment" />
 
             <s:SegmentedControl
-                DisabledColor="Yellow"
                 ItemsSource="{Binding Colors}"
                 SelectedSegment="{Binding SelectedSegment, Mode=TwoWay}"
-                SelectedTextColor="White"
-                TextColor="{StaticResource Gray950}"
+                SelectedTextColor="{StaticResource White}"
+                TextColor="{StaticResource Primary}"
                 TintColor="{StaticResource Primary}" />
 
             <Grid BackgroundColor="{StaticResource Gray100}">

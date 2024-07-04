@@ -45,6 +45,11 @@
                 CommandParameter="Test3Page"
                 Text="Test 3: Data binding with viewmodels"
                 HorizontalOptions="Fill" />
+            <Button
+                Command="{Binding NavigateToPageCommand}"
+                CommandParameter="Test4Page"
+                Text="Test 4: SegmentedControl with styles"
+                HorizontalOptions="Fill" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

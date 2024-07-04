@@ -57,6 +57,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\Test4Page.xaml.cs">
+	    <DependentUpon>Test4Page.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\Test3Page.xaml.cs">
 	    <DependentUpon>Test3Page.xaml</DependentUpon>
 	  </Compile>
@@ -73,6 +76,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\Converters.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Test4Page.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Test1Page.xaml">

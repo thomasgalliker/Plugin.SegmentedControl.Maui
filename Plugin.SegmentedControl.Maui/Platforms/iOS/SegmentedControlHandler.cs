@@ -11,8 +11,12 @@ namespace Plugin.SegmentedControl.Maui
             [nameof(SegmentedControl.IsEnabled)] = MapIsEnabled,
             [nameof(SegmentedControl.SelectedSegment)] = MapSelectedSegment,
             [nameof(SegmentedControl.TintColor)] = MapTintColor,
+            [nameof(SegmentedControl.TextColor)] = MapTextColor,
             [nameof(SegmentedControl.SelectedTextColor)] = MapSelectedTextColor,
-            [nameof(SegmentedControl.TextColor)] = MapTextColor
+            //[nameof(SegmentedControl.DisabledBackgroundColor)] = MapDisabledBackgroundColor, // TODO: Implement
+            //[nameof(SegmentedControl.DisabledTextColor)] = MapDisabledTextColor, // TODO: Implement
+            //[nameof(SegmentedControl.DisabledTintColor)] = MapDisabledTintColor, // TODO: Implement
+            //[nameof(SegmentedControl.Children)] = MapChildren, // TODO: Implement
         };
 
         public SegmentedControlHandler() : base(Mapper)
@@ -37,7 +41,7 @@ namespace Plugin.SegmentedControl.Maui
 
             segmentControl.TintColor = this.VirtualView.IsEnabled
                 ? this.VirtualView.TintColor.ToPlatform()
-                : this.VirtualView.DisabledColor.ToPlatform();
+                : this.VirtualView.DisabledTintColor.ToPlatform();
 
             segmentControl.SetTitleTextAttributes(new UIStringAttributes
             {
@@ -72,20 +76,20 @@ namespace Plugin.SegmentedControl.Maui
             {
                 handler.PlatformView.SelectedSegmentTintColor = control.IsEnabled
                     ? control.TintColor.ToPlatform()
-                    : control.DisabledColor.ToPlatform();
+                    : control.DisabledTintColor.ToPlatform();
             }
             else
             {
                 handler.PlatformView.TintColor = control.IsEnabled
                     ? control.TintColor.ToPlatform()
-                    : control.DisabledColor.ToPlatform();
+                    : control.DisabledTintColor.ToPlatform();
             }
         }
 
         private static void MapSelectedSegment(SegmentedControlHandler handler, SegmentedControl control)
         {
             handler.PlatformView.SelectedSegment = control.SelectedSegment;
-            control.RaiseSelectionChanged();
+            control.RaiseSelectionChanged(control.SelectedSegment);
         }
 
         private static void MapIsEnabled(SegmentedControlHandler handler, SegmentedControl control)
@@ -94,7 +98,7 @@ namespace Plugin.SegmentedControl.Maui
 
             handler.PlatformView.TintColor = control.IsEnabled
                 ? control.TintColor.ToPlatform()
-                : control.DisabledColor.ToPlatform();
+                : control.DisabledTintColor.ToPlatform();
         }
 
         private static void MapSelectedTextColor(SegmentedControlHandler handler, SegmentedControl control)
@@ -114,6 +118,5 @@ namespace Plugin.SegmentedControl.Maui
                     ForegroundColor = control.TextColor.ToPlatform()
                 }, UIControlState.Normal);
         }
-
     }
 }
