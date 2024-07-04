@@ -1,10 +1,10 @@
-﻿using SegmentedControlDemoApp.Services;
-using SegmentedControlDemoApp.ViewModels;
-using SegmentedControlDemoApp.Views;
-using Plugin.SegmentedControl.Maui;
-using CommunityToolkit.Maui;
+﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
+using Plugin.SegmentedControl.Maui;
+using SegmentedControlDemoApp.Services;
+using SegmentedControlDemoApp.ViewModels;
+using SegmentedControlDemoApp.Views;
 
 namespace SegmentedControlDemoApp
 {
@@ -39,6 +39,15 @@ namespace SegmentedControlDemoApp
             // Register pages and view models
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<MainViewModel>();
+
+            builder.Services.AddTransient<Test1Page>();
+            builder.Services.AddTransient<Test1ViewModel>();
+
+            builder.Services.AddTransient<Test2Page>();
+            builder.Services.AddTransient<Test2ViewModel>();
+
+            builder.Services.AddTransient<Test3Page>();
+            builder.Services.AddTransient<Test3ViewModel>();
 
             return builder.Build();
         }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:s="http://plugin.segmentedControl.maui"
+    xmlns:vm="clr-namespace:SegmentedControlDemoApp.ViewModels"
+    x:Class="SegmentedControlDemoApp.Views.Test2Page"
+    Title="Test2Page"
+    x:DataType="vm:Test2ViewModel">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="20"
+            Spacing="20"
+            VerticalOptions="Start">
+
+            <Label Text="Example with data binding string values to ItemsSource and SelectedSegment" />
+
+            <s:SegmentedControl
+                DisabledColor="Yellow"
+                ItemsSource="{Binding Colors}"
+                SelectedSegment="{Binding SelectedSegment, Mode=TwoWay}"
+                SelectedTextColor="White"
+                TextColor="{StaticResource Gray950}"
+                TintColor="{StaticResource Primary}" />
+
+            <Grid BackgroundColor="{StaticResource Gray100}">
+                <Label
+                    IsVisible="{Binding IsTab1Active}"
+                    Text="Content of Tab1"
+                    TextColor="Red" />
+
+                <Label
+                    IsVisible="{Binding IsTab2Active}"
+                    Text="Content of Tab2"
+                    TextColor="Green" />
+
+                <Label
+                    IsVisible="{Binding IsTab3Active}"
+                    Text="Content of Tab3"
+                    TextColor="Blue" />
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

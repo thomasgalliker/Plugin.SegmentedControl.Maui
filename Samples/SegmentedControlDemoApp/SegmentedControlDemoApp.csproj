@@ -57,10 +57,31 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\Test3Page.xaml.cs">
+	    <DependentUpon>Test3Page.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Test2Page.xaml.cs">
+	    <DependentUpon>Test2Page.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Test1Page.xaml.cs">
+	    <DependentUpon>Test1Page.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Controls\DividerLine.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\Converters.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Test1Page.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Test3Page.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Test2Page.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

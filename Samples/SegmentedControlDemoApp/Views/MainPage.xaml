@@ -26,41 +26,24 @@
             Spacing="16"
             VerticalOptions="Start">
 
-            <Grid
-                ColumnDefinitions="Auto, *"
-                ColumnSpacing="10">
-                <Image
-                    Grid.Column="0"
-                    Source="dotnet_bot.png"
-                    HeightRequest="100" />
-                <Label
-                    Grid.Column="1"
-                    Text="MAUI sample app for SegmentedControl demonstration. This sample app is used to demonstrate and test the main features of the nuget package Plugin.SegmentedControl.Maui." />
-            </Grid>
-
-            <controls:DividerLine />
-            <!--<s:SegmentedControl
-                SelectedTextColor="White"
-                TextColor="Black"
-                TintColor="Red"
-                WidthRequest="{OnPlatform Android=350}"
-                HorizontalOptions="Fill">
-                <s:SegmentedControl.Children>
-                    <s:SegmentedControlOption Text="Tab1" />
-                    <s:SegmentedControlOption Text="Tab2" />
-                    <s:SegmentedControlOption Text="Tab3" />
-                </s:SegmentedControl.Children>
-            </s:SegmentedControl>-->
+            <Label Text="This sample app is used to demonstrate and test the main features of the nuget package Plugin.SegmentedControl.Maui." />
 
             <controls:DividerLine />
 
-            <Label
-                Style="{StaticResource Heading1LabelStyle}"
-                Text="Pages" />
             <Button
                 Command="{Binding NavigateToPageCommand}"
-                CommandParameter="TestPage"
-                Text="TestPage"
+                CommandParameter="Test1Page"
+                Text="Test 1: XAML &amp; Code-behind"
+                HorizontalOptions="Fill" />
+            <Button
+                Command="{Binding NavigateToPageCommand}"
+                CommandParameter="Test2Page"
+                Text="Test 2: Data binding with string values"
+                HorizontalOptions="Fill" />
+            <Button
+                Command="{Binding NavigateToPageCommand}"
+                CommandParameter="Test3Page"
+                Text="Test 3: Data binding with viewmodels"
                 HorizontalOptions="Fill" />
         </VerticalStackLayout>
     </ScrollView>

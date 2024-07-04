@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:s="http://plugin.segmentedControl.maui"
+    xmlns:vm="clr-namespace:SegmentedControlDemoApp.ViewModels"
+    x:Class="SegmentedControlDemoApp.Views.Test1Page"
+    Title="Test1Page"
+    x:DataType="vm:Test1ViewModel">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="20"
+            Spacing="20"
+            VerticalOptions="Start">
+
+            <Label
+                Style="{StaticResource Heading2LabelStyle}"
+                Text="Example with segement options defined in XAML" />
+
+            <!--  TODO: Remove WidthRequest!!  -->
+            <s:SegmentedControl
+                OnElementChildrenChanging="SegmentedControl_OnElementChildrenChanging"
+                OnSegmentSelected="SegmentedControl_OnSegmentSelected"
+                WidthRequest="{OnPlatform Android=320}">
+                <s:SegmentedControl.Children>
+                    <s:SegmentedControlOption Text="Tab1" />
+                    <s:SegmentedControlOption Text="Tab2" />
+                    <s:SegmentedControlOption Text="Tab3" />
+                </s:SegmentedControl.Children>
+            </s:SegmentedControl>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

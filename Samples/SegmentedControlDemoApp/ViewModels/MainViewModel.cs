@@ -14,6 +14,7 @@ namespace SegmentedControlDemoApp.ViewModels
         private IAsyncRelayCommand appearingCommand;
         private bool isInitialized;
         private IAsyncRelayCommand<string> navigateToPageCommand;
+        private int selectedSegment;
 
         public MainViewModel(
             ILogger<MainViewModel> logger,

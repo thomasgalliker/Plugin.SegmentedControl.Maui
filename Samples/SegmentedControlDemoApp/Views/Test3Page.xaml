@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:s="http://plugin.segmentedControl.maui"
+    xmlns:vm="clr-namespace:SegmentedControlDemoApp.ViewModels"
+    x:Class="SegmentedControlDemoApp.Views.Test3Page"
+    Title="Test3Page"
+    x:DataType="vm:Test3ViewModel">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="20"
+            Spacing="20"
+            VerticalOptions="Start">
+
+            <Label Text="Example with data binding complex item viewmodels to ItemsSource and SegmentedItem" />
+
+            <s:SegmentedControl
+                ItemsSource="{Binding Countries}"
+                SelectedItem="{Binding SelectedCountry, Mode=TwoWay}"
+                TextPropertyName="EnglishName" />
+
+            <Grid BackgroundColor="{StaticResource Gray100}">
+                <Label Text="{Binding SelectedCountry.OfficialName, StringFormat='{}SelectedCountry: {0}'}" />
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
