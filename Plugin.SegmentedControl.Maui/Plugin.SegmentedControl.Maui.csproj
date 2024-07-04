@@ -50,8 +50,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <None Remove="Platforms\iOS\" />
-    <None Remove="Platforms\Android\" />
     <None Remove="Platforms\Android\Resources\color\segmented_control_text.xml" />
     <None Remove="Platforms\Android\Resources\drawable\segmented_control_background.xml" />
     <None Remove="Platforms\Android\Resources\drawable\segmented_control_first_background.xml" />
@@ -59,14 +57,6 @@
     <None Remove="Platforms\Android\Resources\layout\RadioButton.axml" />
     <None Remove="Platforms\Android\Resources\layout\RadioGroup.axml" />
     <None Remove="Platforms\Android\Resources\values\colors.xml" />
-    <None Remove="Extensions\" />
-    <None Remove="Platforms\MacCatalyst\" />
-    <None Remove="Handlers\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Platforms\iOS\" />
-    <Folder Include="Platforms\Android\" />
-    <Folder Include="Platforms\MacCatalyst\" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Platforms\Android\Resources\color\segmented_control_text.xml" />
