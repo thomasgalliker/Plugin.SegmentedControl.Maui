@@ -1,0 +1,1 @@
+﻿dotnet pack .\Plugin.SegmentedControl.Maui\Plugin.SegmentedControl.Maui.csproj /p:Version=1.0.0-pre
