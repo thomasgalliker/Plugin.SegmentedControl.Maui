@@ -1,5 +1,1 @@
-blank_issues_enabled: true
-contact_links:
-  - name: Start a discussion
-    url: https://github.com/thomasgalliker/Plugin.SegmentedControl.Maui/discussions/new/choose
-    about: We use Discussions for these reports
+blank_issues_enabled: false
