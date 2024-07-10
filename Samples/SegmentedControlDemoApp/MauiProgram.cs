@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
-using NLog.Extensions.Logging;
 using Plugin.SegmentedControl.Maui;
 using SegmentedControlDemoApp.Services;
+using SegmentedControlDemoApp.Services.Logging;
 using SegmentedControlDemoApp.ViewModels;
 using SegmentedControlDemoApp.Views;
 
@@ -29,7 +29,7 @@ namespace SegmentedControlDemoApp
                 b.ClearProviders();
                 b.SetMinimumLevel(LogLevel.Trace);
                 b.AddDebug();
-                b.AddNLog();
+                b.AddSentry(SentryConfiguration.Configure);
             });
 
             // Register services
