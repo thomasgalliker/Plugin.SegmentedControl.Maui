@@ -29,7 +29,7 @@
     <Authors>Thomas Galliker</Authors>
     <PackageId>Plugin.SegmentedControl.Maui</PackageId>
     <PackageTags>segmentedcontrol;maui;segmented;control;segment</PackageTags>
-    <PackageIconUrl>https://raw.githubusercontent.com/thomasgalliker/Plugin.SegmentedControl.Maui/develop/Images/logo.png</PackageIconUrl>
+    <PackageIcon>logo.png</PackageIcon>
     <PackageProjectUrl>https://github.com/thomasgalliker/Plugin.SegmentedControl.Maui</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/thomasgalliker/Plugin.SegmentedControl.Maui</RepositoryUrl>
@@ -43,10 +43,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+    <None Include="..\README.md" Pack="True" PackagePath="\" />
+    <None Include="..\Images\logo.png" Pack="True" PackagePath="\" />
   </ItemGroup>
   
   <ItemGroup>
