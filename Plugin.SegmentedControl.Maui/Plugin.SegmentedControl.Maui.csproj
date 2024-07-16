@@ -30,6 +30,7 @@
     <PackageId>Plugin.SegmentedControl.Maui</PackageId>
     <PackageTags>segmentedcontrol;maui;segmented;control;segment</PackageTags>
     <PackageIcon>logo.png</PackageIcon>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/thomasgalliker/Plugin.SegmentedControl.Maui</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/thomasgalliker/Plugin.SegmentedControl.Maui</RepositoryUrl>
@@ -44,6 +45,7 @@
 
   <ItemGroup>
     <None Include="..\README.md" Pack="True" PackagePath="\" />
+    <None Include="..\LICENSE" Pack="True" PackagePath="\" />
     <None Include="..\Images\logo.png" Pack="True" PackagePath="\" />
   </ItemGroup>
   
