@@ -5,7 +5,7 @@
     xmlns:s="http://plugin.segmentedControl.maui"
     xmlns:vm="clr-namespace:SegmentedControlDemoApp.ViewModels"
     x:Class="SegmentedControlDemoApp.Views.Test2Page"
-    Title="Test2Page"
+    Title="Data binding with string values"
     x:DataType="vm:Test2ViewModel">
 
     <ScrollView>

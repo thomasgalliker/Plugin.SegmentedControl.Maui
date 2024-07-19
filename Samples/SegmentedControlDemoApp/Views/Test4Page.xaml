@@ -3,9 +3,8 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:s="http://plugin.segmentedControl.maui"
-    xmlns:vm="clr-namespace:SegmentedControlDemoApp.ViewModels"
     x:Class="SegmentedControlDemoApp.Views.Test4Page"
-    Title="Test4Page">
+    Title="SegmentedControl with styles">
 
     <ScrollView>
         <VerticalStackLayout
@@ -14,16 +13,16 @@
             VerticalOptions="Start">
 
             <Label
-                Style="{StaticResource Heading2LabelStyle}"
-                Text="Example with styles" />
+                Text="All style properties are set in order to evaluate if they work properly. No binding context is assigned." />
 
             <s:SegmentedControl
                 x:Name="SegmentedControl"
-                DisabledTextColor="#FF00FF"
                 DisabledTintColor="#00FF00"
-                SelectedTextColor="#0000FF"
+                DisabledTextColor="#FF00FF"
+                DisabledSelectedTextColor="#FFFF00"
+                TintColor="#00FFFF"
                 TextColor="#FF0000"
-                TintColor="#00FFFF">
+                SelectedTextColor="#0000FF">
                 <s:SegmentedControl.Children>
                     <s:SegmentedControlOption Text="Tab1" />
                     <s:SegmentedControlOption Text="Tab2" />
