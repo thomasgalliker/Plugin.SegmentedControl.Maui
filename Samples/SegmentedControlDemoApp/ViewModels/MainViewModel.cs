@@ -7,13 +7,17 @@ namespace SegmentedControlDemoApp.ViewModels
     public class MainViewModel : ObservableObject
     {
         private readonly INavigationService navigationService;
+        private readonly ILauncher launcher;
 
         private IAsyncRelayCommand<string> navigateToPageCommand;
+        private IAsyncRelayCommand<string> openUrlCommand;
 
         public MainViewModel(
-            INavigationService navigationService)
+            INavigationService navigationService,
+            ILauncher launcher)
         {
             this.navigationService = navigationService;
+            this.launcher = launcher;
         }
 
         public IAsyncRelayCommand<string> NavigateToPageCommand
@@ -26,5 +30,22 @@ namespace SegmentedControlDemoApp.ViewModels
             await this.navigationService.PushAsync(page);
         }
 
+
+        public IAsyncRelayCommand<string> OpenUrlCommand
+        {
+            get => this.openUrlCommand ??= new AsyncRelayCommand<string>(this.OpenUrlAsync);
+        }
+
+        private async Task OpenUrlAsync(string url)
+        {
+            try
+            {
+                await this.launcher.TryOpenAsync(url);
+            }
+            catch
+            {
+                // Ignore exceptions
+            }
+        }
     }
 }

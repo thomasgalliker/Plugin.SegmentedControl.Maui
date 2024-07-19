@@ -35,6 +35,7 @@ namespace SegmentedControlDemoApp
             // Register services
             builder.Services.AddSingleton<INavigationService, MauiNavigationService>();
             builder.Services.AddSingleton<IDialogService, DialogService>();
+            builder.Services.AddSingleton<ILauncher>(_ => Launcher.Default);
 
             // Register pages and view models
             builder.Services.AddTransient<MainPage>();
