@@ -316,15 +316,21 @@ namespace Plugin.SegmentedControl.Maui
             handler.SetTintColor(v, tintColor);
         }
 
-        static void MapDisabledTextColor(SegmentedControlHandler handler, SegmentedControl control)
+        private static void MapDisabledTextColor(SegmentedControlHandler handler, SegmentedControl control)
         {
-            //go through children and update disabled segments
-            for (int i = 0; i < handler.PlatformView.ChildCount; i++)
+            // Go through tab items and update disabled segments
+            var childCount = handler.PlatformView.ChildCount;
+            if (childCount > 0)
             {
-                var v = (RadioButton)handler.PlatformView.GetChildAt(i);
-                if (!v.Enabled || !control.IsEnabled)
+                var disabledTextColor = control.DisabledTextColor.ToPlatform();
+
+                for (var i = 0; i < childCount; i++)
                 {
-                    v.SetTextColor(control.DisabledTextColor.ToPlatform());
+                    var radioButton = (RadioButton)handler.PlatformView.GetChildAt(i);
+                    if (radioButton != null && (!radioButton.Enabled || !control.IsEnabled))
+                    {
+                        radioButton.SetTextColor(disabledTextColor);
+                    }
                 }
             }
         }
