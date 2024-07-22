@@ -4,12 +4,14 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Microsoft.Maui.Controls.Platform;
+using Microsoft.Maui.Controls.PlatformConfiguration;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using Plugin.SegmentedControl.Maui.Extensions;
-using static Android.Views.ViewGroup;
+using Plugin.SegmentedControl.Maui.Utils;
+using static Microsoft.Maui.Controls.PlatformConfiguration.Android.Views.ViewGroup;
 using Font = Microsoft.Maui.Font;
-using RadioButton = Android.Widget.RadioButton;
+using RadioButton = Microsoft.Maui.Controls.PlatformConfiguration.Android.Widget.RadioButton;
 using Rect = Microsoft.Maui.Graphics.Rect;
 
 namespace Plugin.SegmentedControl.Maui
@@ -186,15 +188,16 @@ namespace Plugin.SegmentedControl.Maui
                 var rb = (RadioButton)rg.GetChildAt(radioId);
 
                 //set newly selected button properties
-                var isNewButtonEnabled = this.VirtualView.IsEnabled && rb.Enabled;
+                var segmentedControl = this.VirtualView;
+                var isNewButtonEnabled = segmentedControl.IsEnabled && rb.Enabled;
 
                 var selectedTextColor = isNewButtonEnabled
-                    ? this.VirtualView.SelectedTextColor.ToPlatform()
-                    : this.VirtualView.DisabledTextColor.ToPlatform();
+                    ? segmentedControl.SelectedTextColor.ToPlatform()
+                    : segmentedControl.DisabledTextColor.ToPlatform();
 
                 var selectedTintColor = isNewButtonEnabled
-                    ? this.VirtualView.TintColor.ToPlatform()
-                    : this.VirtualView.DisabledTintColor.ToPlatform();
+                    ? segmentedControl.TintColor.ToPlatform()
+                    : segmentedControl.DisabledTintColor.ToPlatform();
 
                 rb.SetTextColor(selectedTextColor);
                 SetTintColor(rb, selectedTintColor);
@@ -204,12 +207,12 @@ namespace Plugin.SegmentedControl.Maui
                 {
                     var isOldButtonEnabled = this.selectedRadioButton.Enabled;
                     var textColor = isOldButtonEnabled
-                        ? this.VirtualView.TextColor.ToPlatform()
-                        : this.VirtualView.DisabledTextColor.ToPlatform();
+                        ? segmentedControl.TextColor.ToPlatform()
+                        : segmentedControl.DisabledTextColor.ToPlatform();
 
                     var tintColor = isOldButtonEnabled
-                        ? this.VirtualView.TintColor.ToPlatform()
-                        : this.VirtualView.DisabledBackgroundColor.ToPlatform();
+                        ? segmentedControl.TintColor.ToPlatform()
+                        : segmentedControl.DisabledBackgroundColor.ToPlatform();
 
                     this.selectedRadioButton.SetTextColor(textColor);
                     SetTintColor(this.selectedRadioButton, tintColor);
@@ -217,28 +220,29 @@ namespace Plugin.SegmentedControl.Maui
 
                 this.selectedRadioButton = rb;
 
-                this.VirtualView.SelectedSegment = radioId;
+                segmentedControl.SelectedSegment = radioId;
             }
         }
 
         private void ConfigureRadioButton(int i, bool isEnabled, RadioButton radioButton)
         {
-            var isButtonEnabled = this.VirtualView.IsEnabled && isEnabled;
+            var segmentedControl = this.VirtualView;
+            var isButtonEnabled = segmentedControl.IsEnabled && isEnabled;
 
             if (radioButton.Enabled != isButtonEnabled)
             {
                 radioButton.Enabled = isButtonEnabled;
             }
 
-            var isSelected = i == this.VirtualView.SelectedSegment;
+            var isSelected = i == segmentedControl.SelectedSegment;
 
             var tintColor = this.GetTintColor(isSelected, isButtonEnabled);
 
-            if (i == this.VirtualView.SelectedSegment)
+            if (i == segmentedControl.SelectedSegment)
             {
                 var textColor = isButtonEnabled
-                    ? this.VirtualView.SelectedTextColor.ToPlatform()
-                    : this.VirtualView.DisabledTextColor.ToPlatform();
+                    ? segmentedControl.SelectedTextColor.ToPlatform()
+                    : segmentedControl.DisabledTextColor.ToPlatform();
 
                 radioButton.SetTextColor(textColor);
                 this.selectedRadioButton = radioButton;
@@ -246,22 +250,22 @@ namespace Plugin.SegmentedControl.Maui
             else
             {
                 var textColor = isButtonEnabled
-                    ? this.VirtualView.TextColor.ToPlatform()
-                    : this.VirtualView.DisabledTextColor.ToPlatform();
+                    ? segmentedControl.TextColor.ToPlatform()
+                    : segmentedControl.DisabledTextColor.ToPlatform();
 
                 radioButton.SetTextColor(textColor);
             }
 
-            if (this.VirtualView.FontSize is var fontSize && fontSize > 0d)
+            if (segmentedControl.FontSize is var fontSize and > 0d)
             {
                 radioButton.SetTextSize(ComplexUnitType.Sp, (float)fontSize);
             }
 
             var typefaceResolver = this.GetRequiredService<ITypefaceResolver>();
             var typeface = typefaceResolver.GetTypeface(
-                this.VirtualView.FontFamily,
-                this.VirtualView.FontSize,
-                this.VirtualView.FontAttributes);
+                segmentedControl.FontFamily,
+                segmentedControl.FontSize,
+                segmentedControl.FontAttributes);
 
             radioButton.SetTypeface(typeface, TypefaceStyle.Normal);
 
@@ -314,17 +318,17 @@ namespace Plugin.SegmentedControl.Maui
         {
             OnPropertyChanged(handler, control);
         }
-        
+
         private static void MapFontFamily(SegmentedControlHandler handler, SegmentedControl control)
         {
             OnPropertyChanged(handler, control);
         }
-        
+
         private static void MapFontSize(SegmentedControlHandler handler, SegmentedControl control)
         {
             OnPropertyChanged(handler, control);
         }
-        
+
         private static void MapFontAttributes(SegmentedControlHandler handler, SegmentedControl control)
         {
             OnPropertyChanged(handler, control);

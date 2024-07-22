@@ -22,7 +22,7 @@
                 </s:SegmentedControl.Children>
             </s:SegmentedControl>
 
-            <Label Text="FontAttibutes is set to Italic:" />
+            <Label Text="FontAttributes is set to Italic:" />
 
             <s:SegmentedControl
                 FontAttributes="Italic"

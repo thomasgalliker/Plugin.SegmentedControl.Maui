@@ -352,7 +352,7 @@ namespace Plugin.SegmentedControl.Maui
             get => (string)this.GetValue(FontFamilyProperty);
             set => this.SetValue(FontFamilyProperty, value);
         }
-        
+
         public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(
             nameof(FontAttributes),
             typeof(FontAttributes),
