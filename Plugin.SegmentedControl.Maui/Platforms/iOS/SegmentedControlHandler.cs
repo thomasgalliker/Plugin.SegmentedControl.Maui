@@ -56,18 +56,26 @@ namespace Plugin.SegmentedControl.Maui
         {
             base.ConnectHandler(platformView);
 
-            platformView.ValueChanged += this.PlatformView_ValueChanged;
+            if (this.VirtualView.AutoDisconnectHandler)
+            {
+                this.VirtualView.AddCleanUpEvent();
+            }
+
+            platformView.ValueChanged += this.UISegmentedControl_ValueChanged;
         }
 
         protected override void DisconnectHandler(UISegmentedControl platformView)
         {
+            platformView.ValueChanged -= this.UISegmentedControl_ValueChanged;
+
             base.DisconnectHandler(platformView);
-            platformView.ValueChanged -= this.PlatformView_ValueChanged;
         }
 
-        void PlatformView_ValueChanged(object sender, EventArgs e)
+        private void UISegmentedControl_ValueChanged(object sender, EventArgs e)
         {
-            this.VirtualView.SelectedSegment = (int)this.PlatformView.SelectedSegment;
+            var uiSegmentedControl = this.PlatformView;
+            var segmentedControl = this.VirtualView;
+            segmentedControl.SelectedSegment = (int)uiSegmentedControl.SelectedSegment;
         }
 
         private static void MapTintColor(SegmentedControlHandler handler, SegmentedControl control)

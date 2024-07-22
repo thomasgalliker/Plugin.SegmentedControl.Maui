@@ -13,6 +13,13 @@ namespace Plugin.SegmentedControl.Maui
             this.Children = new List<SegmentedControlOption>();
         }
 
+        /// <summary>
+        /// Defines if the platform handler is automatically disconnected
+        /// or if <c>Handler.DisconnectHandler();</c> is called manually.
+        /// Default: <c>true</c> (automatically disconnected)
+        /// </summary>
+        public bool AutoDisconnectHandler { get; set; } = true;
+
         public event EventHandler<ElementChildrenChanging> OnElementChildrenChanging;
 
         public event EventHandler<SegmentSelectEventArgs> OnSegmentSelected;

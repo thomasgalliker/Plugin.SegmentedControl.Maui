@@ -158,6 +158,11 @@ namespace Plugin.SegmentedControl.Maui
         {
             base.ConnectHandler(platformView);
 
+            if (this.VirtualView.AutoDisconnectHandler)
+            {
+                this.VirtualView.AddCleanUpEvent();
+            }
+
             platformView.CheckedChange += this.PlatformView_CheckedChange;
         }
 
