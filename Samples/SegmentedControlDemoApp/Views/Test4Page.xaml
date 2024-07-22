@@ -50,7 +50,7 @@
 
             <s:SegmentedControl
                 FontAttributes="Bold"
-                FontFamily="{StaticResource FontFamilyMonospace}"
+                FontFamily="{StaticResource FontFamilySerif}"
                 FontSize="33"
                 IsEnabled="{Binding Source={x:Reference Switch}, Path=IsToggled}"
                 TintColor="#00FFFF"
