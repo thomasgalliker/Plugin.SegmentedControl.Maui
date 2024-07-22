@@ -1,9 +1,6 @@
 using Android.Graphics;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Controls.Platform;
-using Microsoft.Maui.Graphics.Platform;
 using Plugin.SegmentedControl.Maui.Utils;
-using Font = Microsoft.Maui.Font;
 
 namespace Plugin.SegmentedControl.Maui
 {
@@ -81,9 +78,9 @@ namespace Plugin.SegmentedControl.Maui
 
         public void Dispose()
         {
-            foreach (var typeface in this.typefaceCaches)
+            foreach (var typefaceCache in this.typefaceCaches)
             {
-                typeface.Typeface.Dispose();
+                typefaceCache.Typeface.Dispose();
             }
 
             this.typefaceCaches.Clear();
