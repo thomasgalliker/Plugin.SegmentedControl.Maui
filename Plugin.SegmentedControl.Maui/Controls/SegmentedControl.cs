@@ -237,6 +237,18 @@ namespace Plugin.SegmentedControl.Maui
             set => this.SetValue(DisabledTextColorProperty, value);
         }
 
+        public static readonly BindableProperty DisabledSelectedTextColorProperty = BindableProperty.Create(
+            nameof(DisabledSelectedTextColor),
+            typeof(Color),
+            typeof(SegmentedControl),
+            Colors.Gray);
+
+        public Color DisabledSelectedTextColor
+        {
+            get => (Color)this.GetValue(DisabledSelectedTextColorProperty);
+            set => this.SetValue(DisabledSelectedTextColorProperty, value);
+        }
+
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(
             nameof(BorderColor),
             typeof(Color),
