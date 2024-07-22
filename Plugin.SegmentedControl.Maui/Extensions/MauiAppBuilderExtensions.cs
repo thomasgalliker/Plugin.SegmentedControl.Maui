@@ -11,6 +11,10 @@
             });
 #endif
 
+#if ANDROID
+            builder.Services.AddSingleton<ITypefaceResolver, TypefaceResolver>();
+#endif
+
             return builder;
         }
     }

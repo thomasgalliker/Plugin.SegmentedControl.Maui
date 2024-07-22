@@ -12,17 +12,53 @@
             Spacing="20"
             VerticalOptions="Start">
 
-            <Label
-                Text="All style properties are set in order to evaluate if they work properly. No binding context is assigned." />
+            <Label Text="No style properties are set; use default values:" />
+
+            <s:SegmentedControl IsEnabled="{Binding Source={x:Reference Switch}, Path=IsToggled}">
+                <s:SegmentedControl.Children>
+                    <s:SegmentedControlOption Text="Tab1" />
+                    <s:SegmentedControlOption Text="Tab2" />
+                    <s:SegmentedControlOption Text="Tab3" />
+                </s:SegmentedControl.Children>
+            </s:SegmentedControl>
+
+            <Label Text="FontAttibutes is set to Italic:" />
 
             <s:SegmentedControl
-                x:Name="SegmentedControl"
-                DisabledTintColor="#00FF00"
-                DisabledTextColor="#FF00FF"
-                DisabledSelectedTextColor="#FFFF00"
+                FontAttributes="Italic"
+                IsEnabled="{Binding Source={x:Reference Switch}, Path=IsToggled}">
+                <s:SegmentedControl.Children>
+                    <s:SegmentedControlOption Text="Tab1" />
+                    <s:SegmentedControlOption Text="Tab2" />
+                    <s:SegmentedControlOption Text="Tab3" />
+                </s:SegmentedControl.Children>
+            </s:SegmentedControl>
+
+            <Label Text="FontSize is set to 22:" />
+
+            <s:SegmentedControl
+                FontSize="22"
+                IsEnabled="{Binding Source={x:Reference Switch}, Path=IsToggled}">
+                <s:SegmentedControl.Children>
+                    <s:SegmentedControlOption Text="Tab1" />
+                    <s:SegmentedControlOption Text="Tab2" />
+                    <s:SegmentedControlOption Text="Tab3" />
+                </s:SegmentedControl.Children>
+            </s:SegmentedControl>
+
+            <Label Text="All style properties are set in order to evaluate if they work properly." />
+
+            <s:SegmentedControl
+                FontAttributes="Bold"
+                FontFamily="{StaticResource FontFamilyMonospace}"
+                FontSize="33"
+                IsEnabled="{Binding Source={x:Reference Switch}, Path=IsToggled}"
                 TintColor="#00FFFF"
+                DisabledTintColor="#00FF00"
                 TextColor="#FF0000"
-                SelectedTextColor="#0000FF">
+                DisabledTextColor="#FF00FF"
+                SelectedTextColor="#0000FF"
+                DisabledSelectedTextColor="#FFFF00">
                 <s:SegmentedControl.Children>
                     <s:SegmentedControlOption Text="Tab1" />
                     <s:SegmentedControlOption Text="Tab2" />
@@ -34,12 +70,14 @@
                 ColumnDefinitions="Auto, *"
                 ColumnSpacing="8">
                 <Switch
+                    x:Name="Switch"
                     Grid.Column="0"
-                    IsToggled="{Binding Source={x:Reference SegmentedControl}, Path=IsEnabled}"
+                    IsToggled="True"
                     VerticalOptions="Center" />
                 <Label
                     Grid.Column="1"
-                    Text="{Binding Source={x:Reference SegmentedControl}, Path=IsEnabled, StringFormat='{}SegmentedControl.IsEnabled={0}'}"
+                    FontFamily="{StaticResource FontFamilyMonospace}"
+                    Text="{Binding Source={x:Reference Switch}, Path=IsToggled, StringFormat='{}SegmentedControl.IsEnabled={0}'}"
                     VerticalOptions="Center" />
             </Grid>
 

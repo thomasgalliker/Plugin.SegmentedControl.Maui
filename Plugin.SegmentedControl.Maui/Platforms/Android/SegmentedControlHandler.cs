@@ -9,7 +9,6 @@ using Microsoft.Maui.Platform;
 using Plugin.SegmentedControl.Maui.Extensions;
 using static Android.Views.ViewGroup;
 using Font = Microsoft.Maui.Font;
-using FontExtensions = Microsoft.Maui.Graphics.Platform.FontExtensions;
 using RadioButton = Android.Widget.RadioButton;
 using Rect = Microsoft.Maui.Graphics.Rect;
 
@@ -31,11 +30,19 @@ namespace Plugin.SegmentedControl.Maui
                 [nameof(SegmentedControl.SelectedTextColor)] = MapSelectedTextColor,
                 [nameof(SegmentedControl.DisabledSelectedTextColor)] = MapDisabledSelectedTextColor,
                 [nameof(SegmentedControl.DisabledBackgroundColor)] = MapDisabledBackgroundColor,
+                [nameof(SegmentedControl.FontFamily)] = MapFontFamily,
+                [nameof(SegmentedControl.FontSize)] = MapFontSize,
+                [nameof(SegmentedControl.FontAttributes)] = MapFontAttributes,
                 [nameof(SegmentedControl.Children)] = MapChildren,
             };
 
         public SegmentedControlHandler() : base(Mapper)
         {
+        }
+
+        public override void SetVirtualView(IView view)
+        {
+            base.SetVirtualView(view);
         }
 
         public SegmentedControlHandler(IPropertyMapper mapper) : base(mapper ?? Mapper)
@@ -240,18 +247,19 @@ namespace Plugin.SegmentedControl.Maui
                 radioButton.SetTextColor(textColor);
             }
 
-            // radioButton.TextSize = (float)this.VirtualView.FontSize;
-            radioButton.SetTextSize(ComplexUnitType.Sp, (float)this.VirtualView.FontSize);
+            if (this.VirtualView.FontSize is var fontSize && fontSize > 0d)
+            {
+                radioButton.SetTextSize(ComplexUnitType.Sp, (float)fontSize);
+            }
 
-            var typeface = FontManagerPlatform.GetTypeFace(this.VirtualView.FontFamily);
-
-            // Font font = Font.OfSize(this.VirtualView.FontFamily, this.VirtualView.FontSize)
-            //     .WithAttributes(FontAttributes.Italic);
-            //
-            // var fontManager = this.GetRequiredService<IFontManager>();
-            // Typeface typeface = font.ToTypeface(fontManager);
+            var typefaceResolver = this.GetRequiredService<ITypefaceResolver>();
+            var typeface = typefaceResolver.GetTypeface(
+                this.VirtualView.FontFamily,
+                this.VirtualView.FontSize,
+                this.VirtualView.FontAttributes);
 
             radioButton.SetTypeface(typeface, TypefaceStyle.Normal);
+
 
             SetTintColor(radioButton, tintColor);
 
@@ -298,6 +306,21 @@ namespace Plugin.SegmentedControl.Maui
         }
 
         private static void MapTintColor(SegmentedControlHandler handler, SegmentedControl control)
+        {
+            OnPropertyChanged(handler, control);
+        }
+        
+        private static void MapFontFamily(SegmentedControlHandler handler, SegmentedControl control)
+        {
+            OnPropertyChanged(handler, control);
+        }
+        
+        private static void MapFontSize(SegmentedControlHandler handler, SegmentedControl control)
+        {
+            OnPropertyChanged(handler, control);
+        }
+        
+        private static void MapFontAttributes(SegmentedControlHandler handler, SegmentedControl control)
         {
             OnPropertyChanged(handler, control);
         }

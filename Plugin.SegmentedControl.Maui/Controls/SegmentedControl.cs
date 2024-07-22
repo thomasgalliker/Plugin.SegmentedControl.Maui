@@ -241,7 +241,7 @@ namespace Plugin.SegmentedControl.Maui
             nameof(DisabledSelectedTextColor),
             typeof(Color),
             typeof(SegmentedControl),
-            Colors.Gray);
+            Colors.LightGray);
 
         public Color DisabledSelectedTextColor
         {
@@ -326,7 +326,7 @@ namespace Plugin.SegmentedControl.Maui
             nameof(FontSize),
             typeof(double),
             typeof(SegmentedControl),
-            Device.GetNamedSize(NamedSize.Medium, typeof(Label)));
+            0d);
 
         [TypeConverter(typeof(FontSizeConverter))]
         public double FontSize
@@ -344,6 +344,18 @@ namespace Plugin.SegmentedControl.Maui
         {
             get => (string)this.GetValue(FontFamilyProperty);
             set => this.SetValue(FontFamilyProperty, value);
+        }
+        
+        public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(
+            nameof(FontAttributes),
+            typeof(FontAttributes),
+            typeof(SegmentedControl),
+            FontAttributes.None);
+
+        public FontAttributes FontAttributes
+        {
+            get => (FontAttributes)this.GetValue(FontAttributesProperty);
+            set => this.SetValue(FontAttributesProperty, value);
         }
 
         internal void RaiseSelectionChanged(int segment)
