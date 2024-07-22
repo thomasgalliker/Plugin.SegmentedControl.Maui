@@ -2,6 +2,7 @@ using Android.Graphics;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls.Platform;
 using Microsoft.Maui.Graphics.Platform;
+using Plugin.SegmentedControl.Maui.Utils;
 using Font = Microsoft.Maui.Font;
 
 namespace Plugin.SegmentedControl.Maui
@@ -42,34 +43,14 @@ namespace Plugin.SegmentedControl.Maui
             {
                 try
                 {
-                    Font font;
-
-                    if (fontFamily != null && !fontFamily.Equals("Default", StringComparison.InvariantCultureIgnoreCase) && fontSize > 0d)
-                    {
-                        font = Font.OfSize(fontFamily, fontSize);
-                    }
-                    else
-                    {
-                        font = Font.Default;
-
-                        if (fontSize > 0d)
-                        {
-                            font = font.WithSize(fontSize);
-                        }
-                    }
-
-                    if (fontAttributes != FontAttributes.None)
-                    {
-                        font = font.WithAttributes(fontAttributes);
-                    }
-
-                    var typeface = font.ToTypeface(this.fontManager);
+                    var font = FontHelper.CreateFont(fontFamily, fontSize, fontAttributes);
+                    var typeface = this.fontManager.GetTypeface(font);
 
                     typefaceCache = new TypefaceCache
                     {
                         FontFamily = fontFamily,
                         FontSize = fontSize,
-                        FontAttrbutes = fontAttributes,
+                        FontAttributes = fontAttributes,
                         Typeface = typeface
                     };
 
@@ -93,7 +74,7 @@ namespace Plugin.SegmentedControl.Maui
 
             public double FontSize { get; set; }
 
-            public FontAttributes FontAttrbutes { get; set; }
+            public FontAttributes FontAttributes { get; set; }
 
             public Typeface Typeface { get; set; }
         }
