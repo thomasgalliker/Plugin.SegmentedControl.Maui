@@ -16,5 +16,18 @@
                 Value="Courier" />
         </OnPlatform.Platforms>
     </OnPlatform>
+    
+    <OnPlatform
+        x:Key="FontFamilySerif"
+        x:TypeArguments="x:String">
+        <OnPlatform.Platforms>
+            <On
+                Platform="Android"
+                Value="serif" />
+            <On
+                Platform="iOS"
+                Value="Times New Roman" />
+        </OnPlatform.Platforms>
+    </OnPlatform>
 
 </ResourceDictionary>
