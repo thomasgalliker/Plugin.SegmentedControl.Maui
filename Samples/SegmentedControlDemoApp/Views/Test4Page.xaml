@@ -22,6 +22,18 @@
                 </s:SegmentedControl.Children>
             </s:SegmentedControl>
 
+            <Label Text="FontFamily is set to FontFamilySerif:" />
+
+            <s:SegmentedControl
+                FontFamily="{StaticResource FontFamilySerif}"
+                IsEnabled="{Binding Source={x:Reference Switch}, Path=IsToggled}">
+                <s:SegmentedControl.Children>
+                    <s:SegmentedControlOption Text="Tab1" />
+                    <s:SegmentedControlOption Text="Tab2" />
+                    <s:SegmentedControlOption Text="Tab3" />
+                </s:SegmentedControl.Children>
+            </s:SegmentedControl>
+
             <Label Text="FontAttributes is set to Italic:" />
 
             <s:SegmentedControl
