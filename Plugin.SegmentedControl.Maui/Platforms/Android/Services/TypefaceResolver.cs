@@ -32,7 +32,7 @@ namespace Plugin.SegmentedControl.Maui
             var typefaceCache = this.typefaceCaches.SingleOrDefault(t =>
                 string.Equals(t.FontFamily, fontFamily, StringComparison.InvariantCultureIgnoreCase) &&
                 t.FontSize == fontSize &&
-                t.FontAttrbutes == t.FontAttrbutes);
+                t.FontAttributes == fontAttributes);
 
             if (typefaceCache != null)
             {
