@@ -3,15 +3,12 @@ using Android.Graphics.Drawables;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
-using Microsoft.Maui.Controls.Platform;
-using Microsoft.Maui.Controls.PlatformConfiguration;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using Plugin.SegmentedControl.Maui.Extensions;
 using Plugin.SegmentedControl.Maui.Utils;
-using static Microsoft.Maui.Controls.PlatformConfiguration.Android.Views.ViewGroup;
-using Font = Microsoft.Maui.Font;
-using RadioButton = Microsoft.Maui.Controls.PlatformConfiguration.Android.Widget.RadioButton;
+using static Android.Views.ViewGroup;
+using RadioButton = Android.Widget.RadioButton;
 using Rect = Microsoft.Maui.Graphics.Rect;
 
 namespace Plugin.SegmentedControl.Maui
