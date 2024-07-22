@@ -49,14 +49,17 @@ namespace Plugin.SegmentedControl.Maui
 
             // TODO: Deduplicate assignments
 
-            uiSegmentedControl.Enabled = segmentedControl.IsEnabled;
+            UpdateIsEnabled(uiSegmentedControl, segmentedControl);
 
             uiSegmentedControl.TintColor = segmentedControl.IsEnabled
                 ? segmentedControl.TintColor.ToPlatform()
                 : segmentedControl.DisabledTintColor.ToPlatform();
 
-            UpdateSelectedTextColor(uiSegmentedControl, segmentedControl);
+            UpdateTitleTextAttributesNormal(uiSegmentedControl, segmentedControl);
+            UpdateTitleTextAttributesSelected(uiSegmentedControl, segmentedControl);
+
             uiSegmentedControl.SelectedSegment = segmentedControl.SelectedSegment;
+
             return uiSegmentedControl;
         }
 
@@ -86,19 +89,29 @@ namespace Plugin.SegmentedControl.Maui
             segmentedControl.SelectedSegment = (int)uiSegmentedControl.SelectedSegment;
         }
 
-        private static void MapTintColor(SegmentedControlHandler handler, SegmentedControl control)
+        private static void MapTintColor(SegmentedControlHandler handler, SegmentedControl segmentedControl)
+        {
+            UpdateTintColor(handler.PlatformView, segmentedControl);
+        }
+
+        private static void MapDisabledTintColor(SegmentedControlHandler handler, SegmentedControl segmentedControl)
+        {
+            UpdateTintColor(handler.PlatformView, segmentedControl);
+        }
+
+        private static void UpdateTintColor(UISegmentedControl uiSegmentedControl, SegmentedControl segmentedControl)
         {
             if (UIDevice.CurrentDevice.CheckSystemVersion(13, 0))
             {
-                handler.PlatformView.SelectedSegmentTintColor = control.IsEnabled
-                    ? control.TintColor.ToPlatform()
-                    : control.DisabledTintColor.ToPlatform();
+                uiSegmentedControl.SelectedSegmentTintColor = segmentedControl.IsEnabled
+                    ? segmentedControl.TintColor.ToPlatform()
+                    : segmentedControl.DisabledTintColor.ToPlatform();
             }
             else
             {
-                handler.PlatformView.TintColor = control.IsEnabled
-                    ? control.TintColor.ToPlatform()
-                    : control.DisabledTintColor.ToPlatform();
+                uiSegmentedControl.TintColor = segmentedControl.IsEnabled
+                    ? segmentedControl.TintColor.ToPlatform()
+                    : segmentedControl.DisabledTintColor.ToPlatform();
             }
         }
 
@@ -110,77 +123,68 @@ namespace Plugin.SegmentedControl.Maui
 
         private static void MapIsEnabled(SegmentedControlHandler handler, SegmentedControl segmentedControl)
         {
-            var uiSegmentedControl = handler.PlatformView;
+            UpdateIsEnabled(handler.PlatformView, segmentedControl);
+        }
 
+        private static void UpdateIsEnabled(UISegmentedControl uiSegmentedControl, SegmentedControl segmentedControl)
+        {
             uiSegmentedControl.Enabled = segmentedControl.IsEnabled;
 
-            // MapTintColor(handler, control);
-
-            uiSegmentedControl.TintColor = segmentedControl.IsEnabled
-                ? segmentedControl.TintColor.ToPlatform()
-                : segmentedControl.DisabledTintColor.ToPlatform();
+            UpdateTitleTextAttributesNormal(uiSegmentedControl, segmentedControl);
+            UpdateTitleTextAttributesSelected(uiSegmentedControl, segmentedControl);
+            UpdateTintColor(uiSegmentedControl, segmentedControl);
         }
 
-        private static void MapSelectedTextColor(SegmentedControlHandler handler, SegmentedControl control)
+        private static void MapSelectedTextColor(SegmentedControlHandler handler, SegmentedControl segmentedControl)
         {
-            UpdateSelectedTextColor(handler.PlatformView, control);
+            UpdateTitleTextAttributesSelected(handler.PlatformView, segmentedControl);
         }
 
-        private static void UpdateSelectedTextColor(UISegmentedControl uiSegmentedControl, SegmentedControl segmentedControl)
+        private static void MapDisabledSelectedTextColor(SegmentedControlHandler handler, SegmentedControl segmentedControl)
         {
-            try
-            {
-                var selectedTextColor = segmentedControl.SelectedTextColor.ToPlatform();
-
-                // UIStringAttributes uiTextAttribute = uiSegmentedControl.GetTitleTextAttributes(UIControlState.Normal);
-                // uiTextAttribute.ForegroundColor = selectedTextColor;
-                // uiSegmentedControl.SetTitleTextAttributes(uiTextAttribute, UIControlState.Selected);
-
-                uiSegmentedControl.SetTitleTextAttributes(
-                    new UIStringAttributes { ForegroundColor = selectedTextColor }, UIControlState.Selected);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
+            UpdateTitleTextAttributesSelected(handler.PlatformView, segmentedControl);
         }
 
-        private static void MapTextColor(SegmentedControlHandler handler, SegmentedControl control)
+        private static void MapTextColor(SegmentedControlHandler handler, SegmentedControl segmentedControl)
         {
-            UpdateTextColor(handler.PlatformView, control);
+            UpdateTitleTextAttributesNormal(handler.PlatformView, segmentedControl);
         }
 
-        private static void UpdateTextColor(UISegmentedControl uiSegmentedControl, SegmentedControl segmentedControl)
+        private static void MapDisabledTextColor(SegmentedControlHandler handler, SegmentedControl segmentedControl)
         {
-            var textColor = segmentedControl.SelectedTextColor.ToPlatform();
-            uiSegmentedControl.SetTitleTextAttributes(
-                new UIStringAttributes { ForegroundColor = textColor }, UIControlState.Normal);
-        }
-
-        private static void MapChildren(SegmentedControlHandler handler, SegmentedControl segmentedControl)
-        {
-            // TODO: Implement
+            UpdateTitleTextAttributesNormal(handler.PlatformView, segmentedControl);
         }
 
         private static void MapFontAttributes(SegmentedControlHandler handler, SegmentedControl segmentedControl)
         {
-            UpdateFonts(handler.PlatformView, segmentedControl);
+            UpdateTitleTextAttributesNormal(handler.PlatformView, segmentedControl);
         }
 
         private static void MapFontSize(SegmentedControlHandler handler, SegmentedControl segmentedControl)
         {
-            UpdateFonts(handler.PlatformView, segmentedControl);
+            UpdateTitleTextAttributesNormal(handler.PlatformView, segmentedControl);
         }
 
         private static void MapFontFamily(SegmentedControlHandler handler, SegmentedControl segmentedControl)
         {
-            UpdateFonts(handler.PlatformView, segmentedControl);
+            UpdateTitleTextAttributesNormal(handler.PlatformView, segmentedControl);
         }
 
-        private static void UpdateFonts(UISegmentedControl uiSegmentedControl, SegmentedControl segmentedControl)
+        private static void UpdateTitleTextAttributesNormal(UISegmentedControl uiSegmentedControl, SegmentedControl segmentedControl)
         {
-            // var uiTextAttribute = uiSegmentedControl.GetTitleTextAttributes(UIControlState.Normal);
+            var textColor = segmentedControl.IsEnabled ? segmentedControl.TextColor : segmentedControl.DisabledTextColor;
+            UpdateTitleTextAttributes(uiSegmentedControl, segmentedControl, textColor, UIControlState.Normal);
+        }
 
+        private static void UpdateTitleTextAttributesSelected(UISegmentedControl uiSegmentedControl, SegmentedControl segmentedControl)
+        {
+            var textColor = segmentedControl.IsEnabled ? segmentedControl.SelectedTextColor : segmentedControl.DisabledSelectedTextColor;
+            UpdateTitleTextAttributes(uiSegmentedControl, segmentedControl, textColor, UIControlState.Selected);
+        }
+
+        private static void UpdateTitleTextAttributes(UISegmentedControl uiSegmentedControl, SegmentedControl segmentedControl,
+            Color textColor, UIControlState controlState)
+        {
             var font = FontHelper.CreateFont(
                 segmentedControl.FontFamily,
                 segmentedControl.FontSize,
@@ -190,7 +194,7 @@ namespace Plugin.SegmentedControl.Maui
             var uiFont = fontManager.GetFont(font);
 
             uiSegmentedControl.SetTitleTextAttributes(
-                new UIStringAttributes { Font = uiFont }, UIControlState.Normal);
+                new UIStringAttributes { Font = uiFont, ForegroundColor = textColor.ToPlatform(), }, controlState);
         }
 
         private static void MapDisabledBackgroundColor(SegmentedControlHandler handler, SegmentedControl segmentedControl)
@@ -198,17 +202,7 @@ namespace Plugin.SegmentedControl.Maui
             // TODO: Implement
         }
 
-        private static void MapDisabledSelectedTextColor(SegmentedControlHandler handler, SegmentedControl segmentedControl)
-        {
-            // TODO: Implement
-        }
-
-        private static void MapDisabledTextColor(SegmentedControlHandler handler, SegmentedControl segmentedControl)
-        {
-            // TODO: Implement
-        }
-
-        private static void MapDisabledTintColor(SegmentedControlHandler handler, SegmentedControl segmentedControl)
+        private static void MapChildren(SegmentedControlHandler handler, SegmentedControl segmentedControl)
         {
             // TODO: Implement
         }
