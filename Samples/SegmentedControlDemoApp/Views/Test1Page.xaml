@@ -19,8 +19,8 @@
                 Text="Example with segment options defined in XAML. All style properties are left with default values." />
             
             <s:SegmentedControl
-                OnElementChildrenChanging="SegmentedControl_OnElementChildrenChanging"
-                OnSegmentSelected="SegmentedControl_OnSegmentSelected"
+                ChildrenChanging="SegmentedControl_ChildrenChanging"
+                SelectedIndexChanged="SegmentedControl_SelectedIndexChanged"
                 WidthRequest="160"
                 HorizontalOptions="Start">
                 <s:SegmentedControlOption Text="Tab1" />

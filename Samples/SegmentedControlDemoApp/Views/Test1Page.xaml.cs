@@ -17,15 +17,15 @@ namespace SegmentedControlDemoApp.Views
             this.dialogService = dialogService;
         }
 
-        private void SegmentedControl_OnSegmentSelected(object sender, Plugin.SegmentedControl.Maui.SelectedIndexChangedEventArgs e)
+        private void SegmentedControl_SelectedIndexChanged(object sender, Plugin.SegmentedControl.Maui.SelectedIndexChangedEventArgs e)
         {
-            this.logger.LogDebug($"SegmentedControl_OnSegmentSelected: {e.NewValue}");
-            _ = this.dialogService.DisplayAlertAsync("OnSegmentSelected", $"NewValue={e.NewValue}", "OK");
+            this.logger.LogDebug($"SegmentedControl_SelectedIndexChanged: {e.NewValue}");
+            _ = this.dialogService.DisplayAlertAsync("SelectedIndexChanged", $"NewValue={e.NewValue}", "OK");
         }
 
-        private void SegmentedControl_OnElementChildrenChanging(object sender, Plugin.SegmentedControl.Maui.ChildrenChangingEventArgs e)
+        private void SegmentedControl_ChildrenChanging(object sender, Plugin.SegmentedControl.Maui.ChildrenChangingEventArgs e)
         {
-            this.logger.LogDebug("SegmentedControl_OnElementChildrenChanging");
+            this.logger.LogDebug("SegmentedControl_ChildrenChanging");
         }
     }
 }
