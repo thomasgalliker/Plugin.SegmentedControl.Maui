@@ -342,7 +342,6 @@ namespace Plugin.SegmentedControl.Maui
             segmentedControl.RaiseSelectionChanged(t);
         }
 
-
         private static void MapIsEnabled(SegmentedControlHandler handler, SegmentedControl control)
         {
             OnPropertyChanged(handler, control);
