@@ -305,7 +305,6 @@ namespace Plugin.SegmentedControl.Maui
             set => this.SetValue(SelectedItemProperty, value);
         }
 
-
         public static readonly BindableProperty SegmentSelectedCommandProperty = BindableProperty.Create(
             nameof(SegmentSelectedCommand),
             typeof(ICommand),
@@ -321,7 +320,6 @@ namespace Plugin.SegmentedControl.Maui
             nameof(SegmentSelectedCommandParameter),
             typeof(object),
             typeof(SegmentedControl));
-
 
         public object SegmentSelectedCommandParameter
         {
@@ -387,9 +385,9 @@ namespace Plugin.SegmentedControl.Maui
 
             if (this.Children is not null)
             {
-                foreach (var segment in this.Children)
+                foreach (var segmentedControlOption in this.Children)
                 {
-                    segment.BindingContext = this.BindingContext;
+                    segmentedControlOption.BindingContext = this.BindingContext;
                 }
             }
         }
