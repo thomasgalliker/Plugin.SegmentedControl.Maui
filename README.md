@@ -28,4 +28,5 @@ var builder = MauiApp.CreateBuilder()
 Contributors welcome! If you find a bug or you want to propose a new feature, feel free to do so by opening a new issue on github.com.
 
 ### Links
-`tbd`
+- https://developer.apple.com/documentation/uikit/uisegmentedcontrol
+- https://developer.android.com/reference/android/widget/RadioGroup
