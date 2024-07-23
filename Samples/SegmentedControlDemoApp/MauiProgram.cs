@@ -42,7 +42,6 @@ namespace SegmentedControlDemoApp
             builder.Services.AddTransient<MainViewModel>();
 
             builder.Services.AddTransient<Test1Page>();
-            builder.Services.AddTransient<Test1ViewModel>();
 
             builder.Services.AddTransient<Test2Page>();
             builder.Services.AddTransient<Test2ViewModel>();
