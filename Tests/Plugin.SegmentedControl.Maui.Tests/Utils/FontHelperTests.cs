@@ -6,14 +6,10 @@ namespace Plugin.SegmentedControl.Maui.Tests.Utils
 {
     public class FontHelperTests
     {
-        [Fact]
-        public void ShouldCreateFont()
+        [Theory]
+        [ClassData(typeof(FontTestData))]
+        public void ShouldCreateFont(string fontFamily, double fontSize, FontAttributes fontAttributes)
         {
-            // Arrange
-            var fontFamily = "monospace";
-            var fontSize = 22;
-            var fontAttributes = FontAttributes.Bold;
-
             // Act
             var font = FontHelper.CreateFont(fontFamily, fontSize, fontAttributes);
 
@@ -23,6 +19,22 @@ namespace Plugin.SegmentedControl.Maui.Tests.Utils
             font.Family.Should().Be(fontFamily);
         }
 
-        // TODO: Add more unit tests here!
+        internal class FontTestData : TheoryData<string, double, FontAttributes>
+        {
+            public FontTestData()
+            {
+                // FontSize only
+                this.Add(null, 11d, FontAttributes.None);
+
+                // FontFamily only
+                this.Add("serif", 0d, FontAttributes.None);
+
+                // FontAttributes only
+                this.Add(null, 0d, FontAttributes.Bold | FontAttributes.Italic);
+
+                // All font properties set
+                this.Add("monospace", 22d, FontAttributes.Bold);
+            }
+        }
     }
 }
