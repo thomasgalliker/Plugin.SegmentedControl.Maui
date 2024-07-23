@@ -6,8 +6,7 @@
     xmlns:s="http://plugin.segmentedControl.maui"
     xmlns:vm="clr-namespace:SegmentedControlDemoApp.ViewModels"
     x:Class="SegmentedControlDemoApp.Views.Test1Page"
-    Title="XAML &amp; Code-behind"
-    x:DataType="vm:Test1ViewModel">
+    Title="XAML &amp; Code-behind">
 
     <ScrollView>
         <VerticalStackLayout
