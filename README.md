@@ -1,4 +1,3 @@
-
 # SegmentedControl for .NET MAUI
 
 [![Version](https://img.shields.io/nuget/v/Plugin.SegmentedControl.Maui.svg)](https://www.nuget.org/packages/Plugin.SegmentedControl.Maui)  [![Downloads](https://img.shields.io/nuget/dt/Plugin.SegmentedControl.Maui.svg)](https://www.nuget.org/packages/Plugin.SegmentedControl.Maui)
