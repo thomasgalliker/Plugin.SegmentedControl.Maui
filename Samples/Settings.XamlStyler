@@ -24,7 +24,8 @@
     "mc:Ignorable, d:IsDataSource, d:LayoutOverrides, d:IsStaticText",
     "Storyboard.*, From, To, Duration",
     "Horizontal*, Vertical*",
-    "Start*, End*"
+    "Start*, End*",
+    "TintColor, DisabledTintColor, TextColor, DisabledTextColor, SelectedTextColor, DisabledSelectedTextColor",
   ],
   "FirstLineAttributes": "",
   "OrderAttributesByName": true,

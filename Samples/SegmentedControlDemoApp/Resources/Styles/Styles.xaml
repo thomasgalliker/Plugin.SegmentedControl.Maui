@@ -177,7 +177,12 @@
             </VisualStateGroupList>
         </Setter>
     </Style>
-
+    
+    <Style TargetType="Span" x:Key="HyperlinkSpanStyle">
+        <Setter Property="TextColor" Value="Blue" />
+        <Setter Property="TextDecorations" Value="Underline" />
+    </Style>
+    
     <Style
         x:Key="Heading1LabelStyle"
         BasedOn="{StaticResource LabelStyle}"

@@ -5,7 +5,7 @@
     xmlns:s="http://plugin.segmentedControl.maui"
     xmlns:vm="clr-namespace:SegmentedControlDemoApp.ViewModels"
     x:Class="SegmentedControlDemoApp.Views.Test3Page"
-    Title="Test3Page"
+    Title="Data binding with MVVM"
     x:DataType="vm:Test3ViewModel">
 
     <ScrollView>
@@ -14,7 +14,7 @@
             Spacing="20"
             VerticalOptions="Start">
 
-            <Label Text="Example with data binding complex item viewmodels to ItemsSource and SegmentedItem" />
+            <Label Text="Example with data binding complex item view models to ItemsSource and SegmentedItem" />
 
             <s:SegmentedControl
                 ItemsSource="{Binding Countries}"

@@ -30,12 +30,16 @@
     <PackageId>Plugin.SegmentedControl.Maui</PackageId>
     <PackageTags>segmentedcontrol;maui;segmented;control;segment</PackageTags>
     <PackageIcon>logo.png</PackageIcon>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/thomasgalliker/Plugin.SegmentedControl.Maui</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/thomasgalliker/Plugin.SegmentedControl.Maui</RepositoryUrl>
     <Company>superdev GmbH</Company>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <PackageReleaseNotes>1.0
+    <PackageReleaseNotes>1.1
+- Add new properties FontFamily, FontSize, FontAttributes
+
+1.0
 - Initial release
     </PackageReleaseNotes>
     <Copyright>Copyright $([System.DateTime]::Now.ToString(`yyyy`)) © Thomas Galliker</Copyright>
@@ -44,6 +48,7 @@
 
   <ItemGroup>
     <None Include="..\README.md" Pack="True" PackagePath="\" />
+    <None Include="..\LICENSE" Pack="True" PackagePath="\" />
     <None Include="..\Images\logo.png" Pack="True" PackagePath="\" />
   </ItemGroup>
   

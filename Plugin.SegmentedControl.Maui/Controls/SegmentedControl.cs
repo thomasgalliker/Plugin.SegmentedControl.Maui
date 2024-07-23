@@ -13,6 +13,13 @@ namespace Plugin.SegmentedControl.Maui
             this.Children = new List<SegmentedControlOption>();
         }
 
+        /// <summary>
+        /// Defines if the platform handler is automatically disconnected
+        /// or if <c>Handler.DisconnectHandler();</c> is called manually.
+        /// Default: <c>true</c> (automatically disconnected)
+        /// </summary>
+        public bool AutoDisconnectHandler { get; set; } = true;
+
         public event EventHandler<ElementChildrenChanging> OnElementChildrenChanging;
 
         public event EventHandler<SegmentSelectEventArgs> OnSegmentSelected;
@@ -237,6 +244,18 @@ namespace Plugin.SegmentedControl.Maui
             set => this.SetValue(DisabledTextColorProperty, value);
         }
 
+        public static readonly BindableProperty DisabledSelectedTextColorProperty = BindableProperty.Create(
+            nameof(DisabledSelectedTextColor),
+            typeof(Color),
+            typeof(SegmentedControl),
+            Colors.LightGray);
+
+        public Color DisabledSelectedTextColor
+        {
+            get => (Color)this.GetValue(DisabledSelectedTextColorProperty);
+            set => this.SetValue(DisabledSelectedTextColorProperty, value);
+        }
+
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(
             nameof(BorderColor),
             typeof(Color),
@@ -314,7 +333,7 @@ namespace Plugin.SegmentedControl.Maui
             nameof(FontSize),
             typeof(double),
             typeof(SegmentedControl),
-            Device.GetNamedSize(NamedSize.Medium, typeof(Label)));
+            0d);
 
         [TypeConverter(typeof(FontSizeConverter))]
         public double FontSize
@@ -332,6 +351,18 @@ namespace Plugin.SegmentedControl.Maui
         {
             get => (string)this.GetValue(FontFamilyProperty);
             set => this.SetValue(FontFamilyProperty, value);
+        }
+
+        public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(
+            nameof(FontAttributes),
+            typeof(FontAttributes),
+            typeof(SegmentedControl),
+            FontAttributes.None);
+
+        public FontAttributes FontAttributes
+        {
+            get => (FontAttributes)this.GetValue(FontAttributesProperty);
+            set => this.SetValue(FontAttributesProperty, value);
         }
 
         internal void RaiseSelectionChanged(int segment)

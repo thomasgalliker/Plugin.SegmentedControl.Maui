@@ -3,8 +3,6 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:SegmentedControlDemoApp.Controls"
-    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    xmlns:s="http://plugin.segmentedControl.maui"
     xmlns:vm="clr-namespace:SegmentedControlDemoApp.ViewModels"
     x:Class="SegmentedControlDemoApp.Views.MainPage"
     Title="SegmentedControl .NET MAUI"
@@ -14,19 +12,32 @@
         <ResourceDictionary />
     </ContentPage.Resources>
 
-    <ContentPage.Behaviors>
-        <mct:EventToCommandBehavior
-            Command="{Binding AppearingCommand}"
-            EventName="Appearing" />
-    </ContentPage.Behaviors>
-
     <ScrollView>
         <VerticalStackLayout
             Padding="16"
             Spacing="16"
             VerticalOptions="Start">
 
-            <Label Text="This sample app is used to demonstrate and test the main features of the nuget package Plugin.SegmentedControl.Maui." />
+            <Label>
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span
+                            Text="This sample app is used to demonstrate and test the main features of the nuget package " />
+
+                        <Span
+                            Text="Plugin.SegmentedControl.Maui"
+                            Style="{StaticResource HyperlinkSpanStyle}">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding OpenUrlCommand}"
+                                    CommandParameter="https://www.nuget.org/packages/Plugin.SegmentedControl.Maui"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <Span
+                            Text="." />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
 
             <controls:DividerLine />
 
@@ -43,7 +54,7 @@
             <Button
                 Command="{Binding NavigateToPageCommand}"
                 CommandParameter="Test3Page"
-                Text="Test 3: Data binding with viewmodels"
+                Text="Test 3: Data binding with MVVM"
                 HorizontalOptions="Fill" />
             <Button
                 Command="{Binding NavigateToPageCommand}"
