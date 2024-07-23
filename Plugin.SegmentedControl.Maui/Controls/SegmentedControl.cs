@@ -20,9 +20,9 @@ namespace Plugin.SegmentedControl.Maui
         /// </summary>
         public bool AutoDisconnectHandler { get; set; } = true;
 
-        public event EventHandler<ElementChildrenChanging> OnElementChildrenChanging;
+        public event EventHandler<ChildrenChangingEventArgs> ChildrenChanging;
 
-        public event EventHandler<SegmentSelectEventArgs> OnSegmentSelected;
+        public event EventHandler<SelectedIndexChangedEventArgs> SelectedIndexChanged;
 
         public static readonly BindableProperty ChildrenProperty = BindableProperty.Create(
             nameof(Children),
@@ -43,7 +43,7 @@ namespace Plugin.SegmentedControl.Maui
                 && newValue is IList<SegmentedControlOption> newItemsList
                 && segmentedControl.Children != null)
             {
-                segmentedControl.OnElementChildrenChanging?.Invoke(segmentedControl, new ElementChildrenChanging((IList<SegmentedControlOption>)oldValue, newItemsList));
+                segmentedControl.ChildrenChanging?.Invoke(segmentedControl, new ChildrenChangingEventArgs((IList<SegmentedControlOption>)oldValue, newItemsList));
                 segmentedControl.Children.Clear();
 
                 foreach (var newSegment in newItemsList)
@@ -370,7 +370,7 @@ namespace Plugin.SegmentedControl.Maui
                 segment < this.Children.Count &&
                 this.Children[segment].IsEnabled)
             {
-                OnSegmentSelected?.Invoke(this, new SegmentSelectEventArgs { NewValue = segment });
+                SelectedIndexChanged?.Invoke(this, new SelectedIndexChangedEventArgs { NewValue = segment });
 
                 if (!(this.SegmentSelectedCommand is null) && this.SegmentSelectedCommand.CanExecute(this.SegmentSelectedCommandParameter))
                 {

@@ -26,7 +26,7 @@ namespace Plugin.SegmentedControl.Maui.Tests
             // Arrange
             var segmentSelectedCommand = 0;
             var segmentedControl = CreateSegmentedControl();
-            segmentedControl.OnSegmentSelected += (o, e) => { segmentSelectedCommand++; };
+            segmentedControl.SelectedIndexChanged += (o, e) => { segmentSelectedCommand++; };
 
             // Act
             segmentedControl.RaiseSelectionChanged(1);
