@@ -39,11 +39,6 @@ namespace Plugin.SegmentedControl.Maui
         {
         }
 
-        public override void SetVirtualView(IView view)
-        {
-            base.SetVirtualView(view);
-        }
-
         public SegmentedControlHandler(IPropertyMapper mapper) : base(mapper ?? Mapper)
         {
         }
