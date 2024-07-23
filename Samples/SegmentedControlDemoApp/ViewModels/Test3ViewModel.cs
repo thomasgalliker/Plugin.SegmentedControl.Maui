@@ -15,6 +15,8 @@ namespace SegmentedControlDemoApp.ViewModels
                new CountryItemViewModel("Sweden", "Kingdom of Sweden", "SE"),
                new CountryItemViewModel("United States of America", "United States of America", "US"),
             ];
+
+            this.SelectedCountry = this.Countries.First();
         }
 
         public CountryItemViewModel[] Countries
