@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -15,10 +15,10 @@
             Spacing="20"
             VerticalOptions="Start">
 
-            <Label
-                Text="Example with segment options defined in XAML. All style properties are left with default values." />
-            
+            <Label Text="Example with segment options defined in XAML. All style properties are left with default values. WidthRequest=160." />
+
             <s:SegmentedControl
+                x:Name="SegmentedControl"
                 ChildrenChanging="SegmentedControl_ChildrenChanging"
                 SelectedIndexChanged="SegmentedControl_SelectedIndexChanged"
                 WidthRequest="160"
@@ -27,6 +27,8 @@
                 <s:SegmentedControlOption Text="Tab2" />
                 <s:SegmentedControlOption Text="Tab3" />
             </s:SegmentedControl>
+
+            <Label Text="{Binding Source={x:Reference SegmentedControl}, Path=SelectedSegment, StringFormat='{}SelectedSegment={0}'}" />
 
         </VerticalStackLayout>
     </ScrollView>

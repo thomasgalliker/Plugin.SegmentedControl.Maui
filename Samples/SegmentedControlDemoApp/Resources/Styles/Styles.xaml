@@ -32,6 +32,7 @@
         <Setter Property="Padding" Value="14,10" />
         <Setter Property="MinimumHeightRequest" Value="44" />
         <Setter Property="MinimumWidthRequest" Value="44" />
+        <Setter Property="LineBreakMode" Value="WordWrap" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -177,12 +178,14 @@
             </VisualStateGroupList>
         </Setter>
     </Style>
-    
-    <Style TargetType="Span" x:Key="HyperlinkSpanStyle">
+
+    <Style
+        x:Key="HyperlinkSpanStyle"
+        TargetType="Span">
         <Setter Property="TextColor" Value="Blue" />
         <Setter Property="TextDecorations" Value="Underline" />
     </Style>
-    
+
     <Style
         x:Key="Heading1LabelStyle"
         BasedOn="{StaticResource LabelStyle}"

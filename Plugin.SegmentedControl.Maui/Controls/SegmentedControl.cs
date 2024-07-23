@@ -297,6 +297,7 @@ namespace Plugin.SegmentedControl.Maui
             nameof(SelectedItem),
             typeof(object),
             typeof(SegmentedControl),
+            null,
             BindingMode.TwoWay);
 
         public object SelectedItem

@@ -32,7 +32,7 @@ namespace Plugin.SegmentedControl.Maui
             nameof(Item),
             typeof(object),
             typeof(SegmentedControlOption),
-            propertyChanged: (bindable, value, newValue) => ((SegmentedControlOption)bindable).OnItemPropertyChanged(value, newValue));
+            propertyChanged: (bindable, oldValue, newValue) => ((SegmentedControlOption)bindable).OnItemPropertyChanged(oldValue, newValue));
 
         public object Item
         {
@@ -40,9 +40,9 @@ namespace Plugin.SegmentedControl.Maui
             set => this.SetValue(ItemProperty, value);
         }
 
-        private void OnItemPropertyChanged(object value, object newValue)
+        private void OnItemPropertyChanged(object oldValue, object newValue)
         {
-            if (value is INotifyPropertyChanged mutableItem)
+            if (oldValue is INotifyPropertyChanged mutableItem)
             {
                 mutableItem.PropertyChanged -= this.OnItemPropertyChanged;
             }
@@ -57,7 +57,8 @@ namespace Plugin.SegmentedControl.Maui
         {
             base.OnPropertyChanged(propertyName);
 
-            if (propertyName == nameof(this.Item) || propertyName == nameof(this.TextPropertyName))
+            if (propertyName == nameof(this.Item) ||
+                propertyName == nameof(this.TextPropertyName))
             {
                 this.SetTextFromItemProperty();
             }
@@ -75,7 +76,8 @@ namespace Plugin.SegmentedControl.Maui
         {
             if (this.Item != null && this.TextPropertyName != null)
             {
-                this.Text = this.Item.GetType().GetProperty(this.TextPropertyName)?.GetValue(this.Item)?.ToString();
+                var propertyInfo = this.Item.GetType().GetProperty(this.TextPropertyName);
+                this.Text = propertyInfo?.GetValue(this.Item)?.ToString();
             }
         }
     }
