@@ -20,11 +20,11 @@ namespace Plugin.SegmentedControl.Maui
         /// </summary>
         public bool AutoDisconnectHandler { get; set; } = true;
 
-        public event EventHandler<ElementChildrenChanging> OnElementChildrenChanging;
+        public event EventHandler<ChildrenChangingEventArgs> ChildrenChanging;
 
-        public event EventHandler<SegmentSelectEventArgs> OnSegmentSelected;
+        public event EventHandler<SelectedIndexChangedEventArgs> SelectedIndexChanged;
 
-        public static readonly BindableProperty ChildrenProperty = BindableProperty.Create(
+        private static readonly BindableProperty ChildrenProperty = BindableProperty.Create(
             nameof(Children),
             typeof(IList<SegmentedControlOption>),
             typeof(SegmentedControl),
@@ -34,7 +34,7 @@ namespace Plugin.SegmentedControl.Maui
         public IList<SegmentedControlOption> Children
         {
             get => (IList<SegmentedControlOption>)this.GetValue(ChildrenProperty);
-            set => this.SetValue(ChildrenProperty, value);
+            private set => this.SetValue(ChildrenProperty, value);
         }
 
         private static void OnChildrenPropertyChanging(BindableObject bindable, object oldValue, object newValue)
@@ -43,7 +43,7 @@ namespace Plugin.SegmentedControl.Maui
                 && newValue is IList<SegmentedControlOption> newItemsList
                 && segmentedControl.Children != null)
             {
-                segmentedControl.OnElementChildrenChanging?.Invoke(segmentedControl, new ElementChildrenChanging((IList<SegmentedControlOption>)oldValue, newItemsList));
+                segmentedControl.ChildrenChanging?.Invoke(segmentedControl, new ChildrenChangingEventArgs((IList<SegmentedControlOption>)oldValue, newItemsList));
                 segmentedControl.Children.Clear();
 
                 foreach (var newSegment in newItemsList)
@@ -67,42 +67,58 @@ namespace Plugin.SegmentedControl.Maui
 
         private void OnItemsSourcePropertyChanged()
         {
-            var itemsSource = this.ItemsSource;
-            var items = itemsSource as IList;
-            if (items == null && itemsSource is IEnumerable list)
-            {
-                items = list.Cast<object>().ToList();
-            }
+            List<SegmentedControlOption> segmentedControlOptions;
 
-            if (items != null)
+            if (this.ItemsSource is IEnumerable<SegmentedControlOption> s)
             {
-                var textValues = items as IEnumerable<string>;
-                if (textValues == null && items.Count > 0 && items[0] is string)
+                segmentedControlOptions = s.ToList();
+            }
+            else
+            {
+                var itemsSource = this.ItemsSource;
+                var items = itemsSource as IList;
+
+                if (items == null && itemsSource is IEnumerable enumerable)
                 {
-                    textValues = items.Cast<string>();
+                    items = enumerable.Cast<object>().ToList();
                 }
 
-                if (textValues != null)
+                if (items != null)
                 {
-                    this.Children = new List<SegmentedControlOption>(textValues.Select(child => new SegmentedControlOption { Text = child }));
-                    this.OnSelectedItemPropertyChanged(true);
+                    var textValues = items as IEnumerable<string>;
+                    if (textValues == null && items.Count > 0 && items[0] is string)
+                    {
+                        textValues = items.Cast<string>();
+                    }
+
+                    if (textValues != null)
+                    {
+                        segmentedControlOptions = textValues
+                            .Select(t => new SegmentedControlOption { Text = t })
+                            .ToList();
+                    }
+                    else
+                    {
+                        segmentedControlOptions = new List<SegmentedControlOption>();
+                        var textPropertyName = this.TextPropertyName;
+                        foreach (var item in items)
+                        {
+                            segmentedControlOptions.Add(new SegmentedControlOption
+                            {
+                                Item = item,
+                                TextPropertyName = textPropertyName
+                            });
+                        }
+                    }
                 }
                 else
                 {
-                    var textPropertyName = this.TextPropertyName;
-                    if (textPropertyName != null)
-                    {
-                        var newChildren = new List<SegmentedControlOption>();
-                        foreach (var item in items)
-                        {
-                            newChildren.Add(new SegmentedControlOption { Item = item, TextPropertyName = textPropertyName });
-                        }
-
-                        this.Children = newChildren;
-                        this.OnSelectedItemPropertyChanged(true);
-                    }
+                    segmentedControlOptions = new List<SegmentedControlOption>();
                 }
             }
+
+            this.Children = segmentedControlOptions;
+            this.OnSelectedItemPropertyChanged(true);
         }
 
         protected override void OnPropertyChanged(string propertyName = null)
@@ -297,6 +313,7 @@ namespace Plugin.SegmentedControl.Maui
             nameof(SelectedItem),
             typeof(object),
             typeof(SegmentedControl),
+            null,
             BindingMode.TwoWay);
 
         public object SelectedItem
@@ -304,7 +321,6 @@ namespace Plugin.SegmentedControl.Maui
             get => this.GetValue(SelectedItemProperty);
             set => this.SetValue(SelectedItemProperty, value);
         }
-
 
         public static readonly BindableProperty SegmentSelectedCommandProperty = BindableProperty.Create(
             nameof(SegmentSelectedCommand),
@@ -321,7 +337,6 @@ namespace Plugin.SegmentedControl.Maui
             nameof(SegmentSelectedCommandParameter),
             typeof(object),
             typeof(SegmentedControl));
-
 
         public object SegmentSelectedCommandParameter
         {
@@ -372,7 +387,7 @@ namespace Plugin.SegmentedControl.Maui
                 segment < this.Children.Count &&
                 this.Children[segment].IsEnabled)
             {
-                OnSegmentSelected?.Invoke(this, new SegmentSelectEventArgs { NewValue = segment });
+                SelectedIndexChanged?.Invoke(this, new SelectedIndexChangedEventArgs { NewValue = segment });
 
                 if (!(this.SegmentSelectedCommand is null) && this.SegmentSelectedCommand.CanExecute(this.SegmentSelectedCommandParameter))
                 {
@@ -387,9 +402,9 @@ namespace Plugin.SegmentedControl.Maui
 
             if (this.Children is not null)
             {
-                foreach (var segment in this.Children)
+                foreach (var segmentedControlOption in this.Children)
                 {
-                    segment.BindingContext = this.BindingContext;
+                    segmentedControlOption.BindingContext = this.BindingContext;
                 }
             }
         }

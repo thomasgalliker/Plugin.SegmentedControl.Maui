@@ -32,7 +32,7 @@ namespace Plugin.SegmentedControl.Maui
             nameof(Item),
             typeof(object),
             typeof(SegmentedControlOption),
-            propertyChanged: (bindable, value, newValue) => ((SegmentedControlOption)bindable).OnItemPropertyChanged(value, newValue));
+            propertyChanged: (bindable, oldValue, newValue) => ((SegmentedControlOption)bindable).OnItemPropertyChanged(oldValue, newValue));
 
         public object Item
         {
@@ -40,9 +40,9 @@ namespace Plugin.SegmentedControl.Maui
             set => this.SetValue(ItemProperty, value);
         }
 
-        private void OnItemPropertyChanged(object value, object newValue)
+        private void OnItemPropertyChanged(object oldValue, object newValue)
         {
-            if (value is INotifyPropertyChanged mutableItem)
+            if (oldValue is INotifyPropertyChanged mutableItem)
             {
                 mutableItem.PropertyChanged -= this.OnItemPropertyChanged;
             }
@@ -57,7 +57,8 @@ namespace Plugin.SegmentedControl.Maui
         {
             base.OnPropertyChanged(propertyName);
 
-            if (propertyName == nameof(this.Item) || propertyName == nameof(this.TextPropertyName))
+            if (propertyName == nameof(this.Item) ||
+                propertyName == nameof(this.TextPropertyName))
             {
                 this.SetTextFromItemProperty();
             }
@@ -73,9 +74,25 @@ namespace Plugin.SegmentedControl.Maui
 
         private void SetTextFromItemProperty()
         {
-            if (this.Item != null && this.TextPropertyName != null)
+            if (this.Item is object item)
             {
-                this.Text = this.Item.GetType().GetProperty(this.TextPropertyName)?.GetValue(this.Item)?.ToString();
+                if (this.TextPropertyName is string textPropertyName && !string.IsNullOrEmpty(textPropertyName))
+                {
+                    var itemType = item.GetType();
+                    var propertyInfo = itemType.GetProperty(textPropertyName);
+                    if (propertyInfo == null)
+                    {
+                        throw new ArgumentException($"Property '{textPropertyName}' could not be found on object of type {itemType.FullName}", nameof(this.TextPropertyName));
+                    }
+                    else
+                    {
+                        this.Text = propertyInfo.GetValue(item)?.ToString();
+                    }
+                }
+                else
+                {
+                    this.Text = item.ToString();
+                }
             }
         }
     }

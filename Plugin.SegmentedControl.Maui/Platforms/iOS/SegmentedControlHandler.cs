@@ -115,10 +115,11 @@ namespace Plugin.SegmentedControl.Maui
             }
         }
 
-        private static void MapSelectedSegment(SegmentedControlHandler handler, SegmentedControl control)
+        private static void MapSelectedSegment(SegmentedControlHandler handler, SegmentedControl segmentedControl)
         {
-            handler.PlatformView.SelectedSegment = control.SelectedSegment;
-            control.RaiseSelectionChanged(control.SelectedSegment);
+            var uiSegmentedControl = handler.PlatformView;
+            uiSegmentedControl.SelectedSegment = segmentedControl.SelectedSegment;
+            segmentedControl.RaiseSelectionChanged(segmentedControl.SelectedSegment);
         }
 
         private static void MapIsEnabled(SegmentedControlHandler handler, SegmentedControl segmentedControl)
@@ -199,7 +200,7 @@ namespace Plugin.SegmentedControl.Maui
 
         private static void MapDisabledBackgroundColor(SegmentedControlHandler handler, SegmentedControl segmentedControl)
         {
-            // TODO: Implement
+            // Unused on iOS
         }
 
         private static void MapChildren(SegmentedControlHandler handler, SegmentedControl segmentedControl)
