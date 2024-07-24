@@ -36,7 +36,12 @@
     <RepositoryUrl>https://github.com/thomasgalliker/Plugin.SegmentedControl.Maui</RepositoryUrl>
     <Company>superdev GmbH</Company>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <PackageReleaseNotes>1.1
+    <PackageReleaseNotes>1.2
+- Children property is no longer public; use ItemsSource instead
+- Improved error handling in SegmentedControlOption
+- Several bug fixes and internal refactorings
+
+1.1
 - Add new properties FontFamily, FontSize, FontAttributes
 
 1.0

@@ -14,12 +14,19 @@
             Spacing="20"
             VerticalOptions="Start">
 
-            <Label Text="Example with data binding complex item view models to ItemsSource and SegmentedItem" />
+            <Label Text="Example with data binding complex item view models to ItemsSource and SelectedItem" />
 
             <s:SegmentedControl
                 ItemsSource="{Binding Countries}"
                 SelectedItem="{Binding SelectedCountry, Mode=TwoWay}"
                 TextPropertyName="EnglishName" />
+
+            <Label Text="Example with data binding complex item view models but leaving the TextPropertyName empty." />
+
+            <s:SegmentedControl
+                ItemsSource="{Binding Countries}"
+                SelectedItem="{Binding SelectedCountry, Mode=TwoWay}"
+                TextPropertyName="{x:Null}" />
 
             <Grid BackgroundColor="{StaticResource Gray100}">
                 <Label Text="{Binding SelectedCountry.OfficialName, StringFormat='{}SelectedCountry: {0}'}" />

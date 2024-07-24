@@ -24,7 +24,7 @@ namespace Plugin.SegmentedControl.Maui
 
         public event EventHandler<SelectedIndexChangedEventArgs> SelectedIndexChanged;
 
-        public static readonly BindableProperty ChildrenProperty = BindableProperty.Create(
+        private static readonly BindableProperty ChildrenProperty = BindableProperty.Create(
             nameof(Children),
             typeof(IList<SegmentedControlOption>),
             typeof(SegmentedControl),
@@ -34,7 +34,7 @@ namespace Plugin.SegmentedControl.Maui
         public IList<SegmentedControlOption> Children
         {
             get => (IList<SegmentedControlOption>)this.GetValue(ChildrenProperty);
-            set => this.SetValue(ChildrenProperty, value);
+            private set => this.SetValue(ChildrenProperty, value);
         }
 
         private static void OnChildrenPropertyChanging(BindableObject bindable, object oldValue, object newValue)
@@ -67,42 +67,58 @@ namespace Plugin.SegmentedControl.Maui
 
         private void OnItemsSourcePropertyChanged()
         {
-            var itemsSource = this.ItemsSource;
-            var items = itemsSource as IList;
-            if (items == null && itemsSource is IEnumerable list)
-            {
-                items = list.Cast<object>().ToList();
-            }
+            List<SegmentedControlOption> segmentedControlOptions;
 
-            if (items != null)
+            if (this.ItemsSource is IEnumerable<SegmentedControlOption> s)
             {
-                var textValues = items as IEnumerable<string>;
-                if (textValues == null && items.Count > 0 && items[0] is string)
+                segmentedControlOptions = s.ToList();
+            }
+            else
+            {
+                var itemsSource = this.ItemsSource;
+                var items = itemsSource as IList;
+
+                if (items == null && itemsSource is IEnumerable enumerable)
                 {
-                    textValues = items.Cast<string>();
+                    items = enumerable.Cast<object>().ToList();
                 }
 
-                if (textValues != null)
+                if (items != null)
                 {
-                    this.Children = new List<SegmentedControlOption>(textValues.Select(child => new SegmentedControlOption { Text = child }));
-                    this.OnSelectedItemPropertyChanged(true);
+                    var textValues = items as IEnumerable<string>;
+                    if (textValues == null && items.Count > 0 && items[0] is string)
+                    {
+                        textValues = items.Cast<string>();
+                    }
+
+                    if (textValues != null)
+                    {
+                        segmentedControlOptions = textValues
+                            .Select(t => new SegmentedControlOption { Text = t })
+                            .ToList();
+                    }
+                    else
+                    {
+                        segmentedControlOptions = new List<SegmentedControlOption>();
+                        var textPropertyName = this.TextPropertyName;
+                        foreach (var item in items)
+                        {
+                            segmentedControlOptions.Add(new SegmentedControlOption
+                            {
+                                Item = item,
+                                TextPropertyName = textPropertyName
+                            });
+                        }
+                    }
                 }
                 else
                 {
-                    var textPropertyName = this.TextPropertyName;
-                    if (textPropertyName != null)
-                    {
-                        var newChildren = new List<SegmentedControlOption>();
-                        foreach (var item in items)
-                        {
-                            newChildren.Add(new SegmentedControlOption { Item = item, TextPropertyName = textPropertyName });
-                        }
-
-                        this.Children = newChildren;
-                        this.OnSelectedItemPropertyChanged(true);
-                    }
+                    segmentedControlOptions = new List<SegmentedControlOption>();
                 }
             }
+
+            this.Children = segmentedControlOptions;
+            this.OnSelectedItemPropertyChanged(true);
         }
 
         protected override void OnPropertyChanged(string propertyName = null)
