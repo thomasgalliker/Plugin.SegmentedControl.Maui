@@ -17,11 +17,13 @@
             <Label Text="Example with data binding string values to ItemsSource and SelectedSegment" />
 
             <s:SegmentedControl
+                x:Name="SegmentedControl"
                 ItemsSource="{Binding Colors}"
+                SelectedIndexChanged="SegmentedControl_SelectedIndexChanged"
                 SelectedSegment="{Binding SelectedSegment, Mode=TwoWay}"
-                SelectedTextColor="{StaticResource White}"
+                TintColor="{StaticResource Primary}"
                 TextColor="{StaticResource Primary}"
-                TintColor="{StaticResource Primary}" />
+                SelectedTextColor="{StaticResource White}" />
 
             <Grid BackgroundColor="{StaticResource Gray100}">
                 <Label
@@ -39,6 +41,41 @@
                     Text="Content of Tab3"
                     TextColor="Blue" />
             </Grid>
+
+            <Grid
+                ColumnDefinitions="*,*,*"
+                ColumnSpacing="8"
+                RowDefinitions="Auto,Auto"
+                RowSpacing="8">
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Command="{Binding SetSelectedSegmentCommand}"
+                    CommandParameter="0"
+                    Text="SelectedSegment=0" />
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Command="{Binding SetSelectedSegmentCommand}"
+                    CommandParameter="1"
+                    Text="SelectedSegment=1" />
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Command="{Binding SetSelectedSegmentCommand}"
+                    CommandParameter="2"
+                    Text="SelectedSegment=2" />
+                <Button
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Command="{Binding SetSelectedSegmentCommand}"
+                    CommandParameter="3"
+                    Text="SelectedSegment=3" />
+            </Grid>
+
+            <Label Text="{Binding SelectedSegment, StringFormat='{}SelectedSegment={0}'}" />
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

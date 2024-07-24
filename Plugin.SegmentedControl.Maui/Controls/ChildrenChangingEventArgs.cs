@@ -1,9 +1,9 @@
 ﻿namespace Plugin.SegmentedControl.Maui
 {
     [Preserve(AllMembers = true)]
-    public class ElementChildrenChanging : EventArgs
+    public class ChildrenChangingEventArgs : EventArgs
     {
-        public ElementChildrenChanging(IList<SegmentedControlOption> oldValues, IList<SegmentedControlOption> newValues)
+        public ChildrenChangingEventArgs(IList<SegmentedControlOption> oldValues, IList<SegmentedControlOption> newValues)
         {
             this.OldValues = oldValues;
             this.NewValues = newValues;

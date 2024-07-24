@@ -1,7 +1,7 @@
 ﻿namespace Plugin.SegmentedControl.Maui
 {
     [Preserve(AllMembers = true)]
-    public class SegmentSelectEventArgs : EventArgs
+    public class SelectedIndexChangedEventArgs : EventArgs
     {
         public int NewValue { get; set; }
     }
