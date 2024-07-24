@@ -74,10 +74,25 @@ namespace Plugin.SegmentedControl.Maui
 
         private void SetTextFromItemProperty()
         {
-            if (this.Item != null && this.TextPropertyName != null)
+            if (this.Item is object item)
             {
-                var propertyInfo = this.Item.GetType().GetProperty(this.TextPropertyName);
-                this.Text = propertyInfo?.GetValue(this.Item)?.ToString();
+                if (this.TextPropertyName is string textPropertyName && !string.IsNullOrEmpty(textPropertyName))
+                {
+                    var itemType = item.GetType();
+                    var propertyInfo = itemType.GetProperty(textPropertyName);
+                    if (propertyInfo == null)
+                    {
+                        throw new ArgumentException($"Property '{textPropertyName}' could not be found on object of type {itemType.FullName}", nameof(this.TextPropertyName));
+                    }
+                    else
+                    {
+                        this.Text = propertyInfo.GetValue(item)?.ToString();
+                    }
+                }
+                else
+                {
+                    this.Text = item.ToString();
+                }
             }
         }
     }

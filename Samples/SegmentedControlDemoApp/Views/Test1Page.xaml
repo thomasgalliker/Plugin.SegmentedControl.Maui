@@ -14,19 +14,31 @@
             Spacing="20"
             VerticalOptions="Start">
 
-            <Label Text="Example with an embedded string array as segment options defined in XAML. All style properties are left with default values." />
+            <Label Text="Example with an embedded string array as segment options defined in XAML.&#10;All style properties are left with default values." />
 
             <s:SegmentedControl>
                 <s:SegmentedControl.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
-                        <x:String>Baboon</x:String>
-                        <x:String>Capuchin Monkey</x:String>
-                        <x:String>Blue Monkey</x:String>
+                        <x:String>Tab 1</x:String>
+                        <x:String>Tab 2</x:String>
+                        <x:String>Tab 3</x:String>
                     </x:Array>
                 </s:SegmentedControl.ItemsSource>
             </s:SegmentedControl>
 
-            <Label Text="Example with SegmentedControlOptions defined in XAML. Events subscribed in code-behind. No styles applied. WidthRequest=160." />
+            <Label Text="Example with an array of SegmentedControlOptions set as ItemsSource." />
+
+            <s:SegmentedControl>
+                <s:SegmentedControl.ItemsSource>
+                    <x:Array Type="{x:Type s:SegmentedControlOption}">
+                        <s:SegmentedControlOption Text="Tab1" />
+                        <s:SegmentedControlOption Text="Tab2" />
+                        <s:SegmentedControlOption Text="Tab3" />
+                    </x:Array>
+                </s:SegmentedControl.ItemsSource>
+            </s:SegmentedControl>
+
+            <Label Text="Example with SegmentedControlOptions defined in XAML. Events subscribed in code-behind.&#10;No styles applied. WidthRequest=160." />
 
             <s:SegmentedControl
                 x:Name="SegmentedControl"
