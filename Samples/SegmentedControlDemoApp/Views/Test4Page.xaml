@@ -61,6 +61,7 @@
             <Label Text="All style properties are set in order to evaluate if they work properly." />
 
             <s:SegmentedControl
+                DisabledBackgroundColor="Black"
                 FontAttributes="Bold"
                 FontFamily="{StaticResource FontFamilySerif}"
                 FontSize="33"
