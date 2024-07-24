@@ -37,16 +37,16 @@ namespace Plugin.SegmentedControl.Maui.Tests
 
         private static SegmentedControl CreateSegmentedControl()
         {
-            // Arrange
-            return new SegmentedControl
+            var segmentedControl = new SegmentedControl
             {
-                Children = new[]
+                ItemsSource = new[]
                 {
                     new SegmentedControlOption { Text = "Tab 1" },
                     new SegmentedControlOption { Text = "Tab 2" },
                     new SegmentedControlOption { Text = "Tab 3" },
                 },
             };
+            return segmentedControl;
         }
     }
 }
