@@ -14,7 +14,19 @@
             Spacing="20"
             VerticalOptions="Start">
 
-            <Label Text="Example with segment options defined in XAML. All style properties are left with default values. WidthRequest=160." />
+            <Label Text="Example with an embedded string array as segment options defined in XAML. All style properties are left with default values." />
+
+            <s:SegmentedControl>
+                <s:SegmentedControl.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Baboon</x:String>
+                        <x:String>Capuchin Monkey</x:String>
+                        <x:String>Blue Monkey</x:String>
+                    </x:Array>
+                </s:SegmentedControl.ItemsSource>
+            </s:SegmentedControl>
+
+            <Label Text="Example with SegmentedControlOptions defined in XAML. Events subscribed in code-behind. No styles applied. WidthRequest=160." />
 
             <s:SegmentedControl
                 x:Name="SegmentedControl"
