@@ -200,7 +200,7 @@ namespace Plugin.SegmentedControl.Maui
 
         private static void MapDisabledBackgroundColor(SegmentedControlHandler handler, SegmentedControl segmentedControl)
         {
-            // TODO: Implement
+            // Unused on iOS
         }
 
         private static void MapChildren(SegmentedControlHandler handler, SegmentedControl segmentedControl)
