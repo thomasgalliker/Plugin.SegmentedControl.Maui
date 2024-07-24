@@ -6,6 +6,7 @@ using Android.Widget;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using Plugin.SegmentedControl.Maui.Extensions;
+using Plugin.SegmentedControl.Maui.Platforms.Extensions;
 using Plugin.SegmentedControl.Maui.Utils;
 using static Android.Views.ViewGroup;
 using RadioButton = Android.Widget.RadioButton;
@@ -216,7 +217,7 @@ namespace Plugin.SegmentedControl.Maui
                 ? segmentedControl.TextColor.ToPlatform()
                 : segmentedControl.DisabledTextColor.ToPlatform();
         }
-        
+
         private static Android.Graphics.Color GetSelectedTextColor(SegmentedControl segmentedControl, bool enabled)
         {
             return enabled
@@ -235,9 +236,6 @@ namespace Plugin.SegmentedControl.Maui
             }
 
             var isSelected = selectedSegment == segmentedControl.SelectedSegment;
-
-            var tintColor = this.GetTintColor(isSelected, isButtonEnabled);
-
             if (isSelected)
             {
                 var textColor = GetSelectedTextColor(segmentedControl, isButtonEnabled);
@@ -264,6 +262,7 @@ namespace Plugin.SegmentedControl.Maui
 
             radioButton.SetTypeface(typeface, TypefaceStyle.Normal);
 
+            var tintColor = this.GetTintColor(isSelected, isButtonEnabled);
             SetTintColor(radioButton, tintColor);
         }
 
@@ -323,7 +322,7 @@ namespace Plugin.SegmentedControl.Maui
             var radioGroup = handler.PlatformView;
 
             var selectedSegment = segmentedControl.SelectedSegment;
-            var radioButton = (RadioButton)radioGroup.GetChildAt(selectedSegment);
+            var radioButton = radioGroup.GetRadioButtonAt(selectedSegment);
             if (radioButton == null)
             {
                 return;
@@ -358,7 +357,8 @@ namespace Plugin.SegmentedControl.Maui
                 return;
             }
 
-            var radioButton = (RadioButton)handler.PlatformView.GetChildAt(selectedSegment);
+            var radioGroup = handler.PlatformView;
+            var radioButton = radioGroup.GetRadioButtonAt(selectedSegment);
             if (radioButton != null)
             {
                 var enabled = segmentedControl.IsEnabled && radioButton.Enabled;
@@ -374,7 +374,8 @@ namespace Plugin.SegmentedControl.Maui
                 return;
             }
 
-            var radioButton = (RadioButton)handler.PlatformView.GetChildAt(selectedSegment);
+            var radioGroup = handler.PlatformView;
+            var radioButton = radioGroup.GetRadioButtonAt(selectedSegment);
             if (radioButton != null)
             {
                 var isButtonEnabled = segmentedControl.IsEnabled && radioButton.Enabled;
@@ -387,19 +388,16 @@ namespace Plugin.SegmentedControl.Maui
         {
             // Go through tab items and update disabled segments
             var radioGroup = handler.PlatformView;
-            var childCount = radioGroup.ChildCount;
-            if (childCount > 0)
+            var disabledRadioButtons = radioGroup.GetRadioButtons()
+                .Where(b => b.Enabled == false)
+                .ToArray();
+
+            if (disabledRadioButtons.Length > 0)
             {
                 var disabledTextColor = segmentedControl.DisabledTextColor.ToPlatform();
 
-                for (var i = 0; i < childCount; i++)
+                foreach (var radioButton in disabledRadioButtons)
                 {
-                    var radioButton = (RadioButton)radioGroup.GetChildAt(i);
-                    if (radioButton == null || radioButton.Enabled)
-                    {
-                        continue;
-                    }
-
                     radioButton.SetTextColor(disabledTextColor);
                 }
             }
@@ -407,17 +405,20 @@ namespace Plugin.SegmentedControl.Maui
 
         private static void MapDisabledBackgroundColor(SegmentedControlHandler handler, SegmentedControl segmentedControl)
         {
-            for (var i = 0; i < handler.PlatformView.ChildCount; i++)
-            {
-                var radioButton = (RadioButton)handler.PlatformView.GetChildAt(i);
-                if (radioButton == null)
-                {
-                    continue;
-                }
+            var radioGroup = handler.PlatformView;
+            var disabledRadioButtons = radioGroup.GetRadioButtons()
+                .Where(b => b.Enabled == false)
+                .ToArray();
 
-                var enabled = !(radioButton.Enabled && segmentedControl.IsEnabled);
-                var tintColor = handler.GetTintColor(radioButton.Checked, enabled);
-                SetTintColor(radioButton, tintColor);
+            if (disabledRadioButtons.Length > 0)
+            {
+                var disabledBackgroundColor = segmentedControl.DisabledBackgroundColor.ToPlatform();
+
+                foreach (var radioButton in disabledRadioButtons)
+                {
+                    var tintColor = handler.GetTintColor(radioButton.Checked, enabled: false);
+                    SetTintColor(radioButton, tintColor);
+                }
             }
         }
 
@@ -480,27 +481,22 @@ namespace Plugin.SegmentedControl.Maui
         private static void MapTextColor(SegmentedControlHandler handler, SegmentedControl segmentedControl)
         {
             var radioGroup = handler.PlatformView;
-            var childCount = radioGroup.ChildCount;
-            if (childCount > 0)
+            var radioButtons = radioGroup.GetRadioButtons().ToArray();
+
+            if (radioButtons.Length > 0)
             {
-                var textColor = segmentedControl.TextColor.ToPlatform();
-                var selectedTextColor = segmentedControl.SelectedTextColor.ToPlatform();
-
-                for (var i = 0; i < childCount; i++)
+                for (var i = 0; i < radioButtons.Length; i++)
                 {
-                    var radioButton = (RadioButton)radioGroup.GetChildAt(i);
-                    if (radioButton == null)
+                    var radioButton = radioButtons[i];
+                    if (i == segmentedControl.SelectedSegment)
                     {
-                        continue;
-                    }
-
-                    if (i != segmentedControl.SelectedSegment)
-                    {
-                        radioButton.SetTextColor(textColor);
+                        var selectedTextColor = GetSelectedTextColor(segmentedControl, radioButton.Enabled);
+                        radioButton.SetTextColor(selectedTextColor);
                     }
                     else
                     {
-                        radioButton.SetTextColor(selectedTextColor);
+                        var textColor = GetTextColor(segmentedControl, radioButton.Enabled);
+                        radioButton.SetTextColor(textColor);
                     }
                 }
             }
