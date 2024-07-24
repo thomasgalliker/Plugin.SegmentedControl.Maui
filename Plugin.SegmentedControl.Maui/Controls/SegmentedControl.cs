@@ -84,7 +84,10 @@ namespace Plugin.SegmentedControl.Maui
 
                 if (textValues != null)
                 {
-                    this.Children = new List<SegmentedControlOption>(textValues.Select(child => new SegmentedControlOption { Text = child }));
+                    var segmentedControlOptions = textValues
+                        .Select(t => new SegmentedControlOption { Text = t })
+                        .ToList();
+                    this.Children = segmentedControlOptions;
                     this.OnSelectedItemPropertyChanged(true);
                 }
                 else
@@ -92,13 +95,17 @@ namespace Plugin.SegmentedControl.Maui
                     var textPropertyName = this.TextPropertyName;
                     if (textPropertyName != null)
                     {
-                        var newChildren = new List<SegmentedControlOption>();
+                        var segmentedControlOptions = new List<SegmentedControlOption>();
                         foreach (var item in items)
                         {
-                            newChildren.Add(new SegmentedControlOption { Item = item, TextPropertyName = textPropertyName });
+                            segmentedControlOptions.Add(new SegmentedControlOption
+                            {
+                                Item = item,
+                                TextPropertyName = textPropertyName
+                            });
                         }
 
-                        this.Children = newChildren;
+                        this.Children = segmentedControlOptions;
                         this.OnSelectedItemPropertyChanged(true);
                     }
                 }
