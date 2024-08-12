@@ -288,7 +288,7 @@ namespace Plugin.SegmentedControl.Maui
             nameof(BorderWidth),
             typeof(double),
             typeof(SegmentedControl),
-            defaultValueCreator: _ => Device.RuntimePlatform == Device.Android ? 1.0 : 0.0);
+            defaultValueCreator: _ => DeviceInfo.Platform == DevicePlatform.Android ? 1.0 : 0.0);
 
         public double BorderWidth
         {
