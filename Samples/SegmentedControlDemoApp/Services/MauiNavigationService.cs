@@ -20,41 +20,7 @@ namespace SegmentedControlDemoApp.Services
         {
             try
             {
-                var pageTypes = FindTypesWithName(pageName);
-                if (pageTypes.Length == 0)
-                {
-                    throw new PageNavigationException($"Page with name '{pageName}' not found");
-                }
-
-                if (pageTypes.Length > 1)
-                {
-                    throw new PageNavigationException(
-                        $"Multiple pages found for name '{pageName}': " +
-                        $"{string.Join($"> {Environment.NewLine}", pageTypes.Select(t => t.FullName))}");
-                }
-
-                var pageType = pageTypes.Single();
-                var page = (Page)this.serviceProvider.GetRequiredService(pageType);
-
-                var viewModelName = pageName.Substring(0, pageName.LastIndexOf("Page")) + "ViewModel";
-                var viewModelTypes = FindTypesWithName(viewModelName);
-
-                if (viewModelTypes.Length == 0)
-                {
-                    this.logger.LogInformation($"View model with name '{viewModelName}' not found");
-                }
-                else if (viewModelTypes.Length == 1)
-                {
-                    var viewModelType = viewModelTypes.Single();
-                    var viewModel = this.serviceProvider.GetRequiredService(viewModelType);
-                    page.BindingContext = viewModel;
-                }
-                else
-                {
-                    throw new PageNavigationException(
-                        $"Multiple view models found for name '{viewModelName}': " +
-                        $"{string.Join($"> {Environment.NewLine}", viewModelTypes.Select(t => t.FullName))}");
-                }
+                var page = this.ResolvePage(pageName);
 
                 await Application.Current.MainPage.Navigation.PushAsync(page);
             }
@@ -63,6 +29,62 @@ namespace SegmentedControlDemoApp.Services
                 this.logger.LogError(ex, "PushAsync failed with exception");
                 throw;
             }
+        }
+
+        public async Task PushModalAsync(string pageName)
+        {
+            try
+            {
+                var page = this.ResolvePage(pageName);
+
+                await Application.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(page));
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(ex, "PushModalAsync failed with exception");
+                throw;
+            }
+        }
+
+        private Page ResolvePage(string pageName)
+        {
+            var pageTypes = FindTypesWithName(pageName);
+            if (pageTypes.Length == 0)
+            {
+                throw new PageNavigationException($"Page with name '{pageName}' not found");
+            }
+
+            if (pageTypes.Length > 1)
+            {
+                throw new PageNavigationException(
+                    $"Multiple pages found for name '{pageName}': " +
+                    $"{string.Join($"> {Environment.NewLine}", pageTypes.Select(t => t.FullName))}");
+            }
+
+            var pageType = pageTypes.Single();
+            var page = (Page)this.serviceProvider.GetRequiredService(pageType);
+
+            var viewModelName = pageName.Substring(0, pageName.LastIndexOf("Page")) + "ViewModel";
+            var viewModelTypes = FindTypesWithName(viewModelName);
+
+            if (viewModelTypes.Length == 0)
+            {
+                this.logger.LogInformation($"View model with name '{viewModelName}' not found");
+            }
+            else if (viewModelTypes.Length == 1)
+            {
+                var viewModelType = viewModelTypes.Single();
+                var viewModel = this.serviceProvider.GetRequiredService(viewModelType);
+                page.BindingContext = viewModel;
+            }
+            else
+            {
+                throw new PageNavigationException(
+                    $"Multiple view models found for name '{viewModelName}': " +
+                    $"{string.Join($"> {Environment.NewLine}", viewModelTypes.Select(t => t.FullName))}");
+            }
+
+            return page;
         }
 
         private static Type[] FindTypesWithName(string typeName)
@@ -82,6 +104,19 @@ namespace SegmentedControlDemoApp.Services
             catch (Exception ex)
             {
                 this.logger.LogError(ex, "PopAsync failed with exception");
+                throw;
+            }
+        }
+
+        public async Task PopModalAsync()
+        {
+            try
+            {
+                await Application.Current.MainPage.Navigation.PopModalAsync();
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(ex, "PopModalAsync failed with exception");
                 throw;
             }
         }

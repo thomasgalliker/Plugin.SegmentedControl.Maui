@@ -17,27 +17,34 @@
             Padding="16"
             Spacing="16"
             VerticalOptions="Start">
-
-            <Label>
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span
-                            Text="This sample app is used to demonstrate and test the main features of the nuget package " />
-
-                        <Span
-                            Text="Plugin.SegmentedControl.Maui"
-                            Style="{StaticResource HyperlinkSpanStyle}">
-                            <Span.GestureRecognizers>
-                                <TapGestureRecognizer
-                                    Command="{Binding OpenUrlCommand}"
-                                    CommandParameter="https://www.nuget.org/packages/Plugin.SegmentedControl.Maui"/>
-                            </Span.GestureRecognizers>
-                        </Span>
-                        <Span
-                            Text="." />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
+            <Grid
+                ColumnDefinitions="Auto, *"
+                ColumnSpacing="10">
+                <Image
+                    Grid.Column="0"
+                    Source="logo.png"
+                    HeightRequest="100" />
+                <Label
+                    Grid.Column="1">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                Text="This sample app is used to demonstrate and test the main features of the nuget package " />
+                            <Span
+                                Text="Plugin.SegmentedControl.Maui"
+                                Style="{StaticResource HyperlinkSpanStyle}">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding OpenUrlCommand}"
+                                        CommandParameter="https://www.nuget.org/packages/Plugin.SegmentedControl.Maui"/>
+                                </Span.GestureRecognizers>
+                            </Span>
+                            <Span
+                                Text="." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </Grid>
 
             <controls:DividerLine />
 
@@ -60,6 +67,11 @@
                 Command="{Binding NavigateToPageCommand}"
                 CommandParameter="Test4Page"
                 Text="Test 4: SegmentedControl with styles"
+                HorizontalOptions="Fill" />
+            <Button
+                Command="{Binding NavigateToPageCommand}"
+                CommandParameter="Test5Page"
+                Text="Test 5: Test with ListView &amp; Navigation"
                 HorizontalOptions="Fill" />
         </VerticalStackLayout>
     </ScrollView>
