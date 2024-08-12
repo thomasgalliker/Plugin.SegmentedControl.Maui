@@ -156,10 +156,19 @@ namespace Plugin.SegmentedControl.Maui
 
             if (this.VirtualView.AutoDisconnectHandler)
             {
-                this.VirtualView.AddCleanUpEvent();
+                // this.VirtualView.AddCleanUpEvent();
+                this.VirtualView.Loaded += this.VirtualViewOnLoaded;
             }
 
             radioGroup.CheckedChange += this.RadioGroup_CheckedChange;
+        }
+
+        private void VirtualViewOnLoaded(object sender, EventArgs e)
+        {
+            if (this.VirtualView.AutoDisconnectHandler)
+            {
+                this.VirtualView.AddCleanUpEvent();
+            }
         }
 
         protected override void DisconnectHandler(RadioGroup radioGroup)
@@ -412,7 +421,7 @@ namespace Plugin.SegmentedControl.Maui
 
             if (disabledRadioButtons.Length > 0)
             {
-                var disabledBackgroundColor = segmentedControl.DisabledBackgroundColor.ToPlatform();
+                // var disabledBackgroundColor = segmentedControl.DisabledBackgroundColor.ToPlatform();
 
                 foreach (var radioButton in disabledRadioButtons)
                 {

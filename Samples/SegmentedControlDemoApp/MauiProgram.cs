@@ -51,6 +51,12 @@ namespace SegmentedControlDemoApp
 
             builder.Services.AddTransient<Test4Page>();
 
+            builder.Services.AddTransient<Test5Page>();
+            builder.Services.AddTransient<Test5ViewModel>();
+
+            builder.Services.AddTransient<MedicationDetailPage>();
+            builder.Services.AddTransient<Test5DetailPage>();
+
             return builder.Build();
         }
     }

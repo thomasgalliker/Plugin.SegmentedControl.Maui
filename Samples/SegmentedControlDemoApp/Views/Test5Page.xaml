@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:s="http://plugin.segmentedControl.maui"
+    xmlns:vm="clr-namespace:SegmentedControlDemoApp.ViewModels"
+    xmlns:controls="clr-namespace:SegmentedControlDemoApp.Controls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:Class="SegmentedControlDemoApp.Views.Test5Page"
+    x:DataType="vm:Test5ViewModel"
+    Title="Test with ListView &amp; Navigation">
+
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior
+            Command="{Binding AppearingCommand}"
+            EventName="Appearing" />
+    </ContentPage.Behaviors>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="GenericGroupHeaderTemplate">
+                <ViewCell x:DataType="vm:GroupViewModel">
+                    <Grid 
+                        ColumnDefinitions="*, Auto"
+                        ColumnSpacing="4"
+                        BackgroundColor="{StaticResource Gray100}"
+                        Padding="4">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CollapseExpandCommand}" />
+                        </Grid.GestureRecognizers>
+                        <Label
+                            Grid.Column="0"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"
+                            Text="{Binding GroupName}"
+                            FontAttributes="Bold" />
+                        <Image 
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            HeightRequest="24"
+                            Source="{Binding IsExpanded, Converter={StaticResource BoolToCollapseExpandImageConverter}}"/>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="MedicationItemTemplate">
+                <ViewCell x:DataType="vm:MedicationItemViewModel">
+                    <Grid
+                        Padding="4">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateMedicationDetailPageCommand}" />
+                        </Grid.GestureRecognizers>
+                        <Label
+                            Text="{Binding Name}" />
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!--  Title  -->
+            <Label
+                Grid.Row="0"
+                MaxLines="2"
+                Text="Antiarrhythmic agents"
+                Style="{StaticResource Heading2LabelStyle}"
+                HorizontalOptions="Fill"
+                Padding="10"
+                BackgroundColor="{StaticResource Gray100}" />
+
+            <!--  Active/future/past medications filter  -->
+            <Grid Grid.Row="1" BackgroundColor="{StaticResource Gray100}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <StackLayout Grid.Row="0" Padding="10">
+                    <s:SegmentedControl
+                        SelectedSegment="{Binding SelectedSegment, Mode=TwoWay}"
+                        TintColor="{StaticResource Primary}"
+                        FontSize="{StaticResource FontSizeLarge}">
+                        <s:SegmentedControl.Children>
+                            <s:SegmentedControlOption Text="{Binding ActiveMedicationsLabelText}" />
+                            <s:SegmentedControlOption Text="{Binding FutureMedicationsLabelText}" />
+                            <s:SegmentedControlOption Text="{Binding PastMedicationsLabelText}" />
+                        </s:SegmentedControl.Children>
+                    </s:SegmentedControl>
+                </StackLayout>
+
+                <controls:DividerLine Grid.Row="1" />
+            </Grid>
+
+            <Grid Grid.Row="2" IsVisible="{Binding IsNotBusy}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- <controls:InfoLinkControl -->
+                <!--     BackgroundColor="{StaticResource ColorPrimaryCompanyAccent}" -->
+                <!--     Grid.Row="0" -->
+                <!--     Image="{images:ImageResource ic_warning_company_large}" -->
+                <!--     ImageTintColor="{StaticResource ColorPrimaryLight}" -->
+                <!--     InfoText="{language:Translate MedicationPlanPage_IsNotLatestMedicationPlan_WarningMessage}" -->
+                <!--     IsVisible="{Binding IsPreviousVersionMedicationPlan}" /> -->
+
+                <!--  List of Active Medications  -->
+                <Grid Grid.Row="1" IsVisible="{Binding IsActiveMedicationsSelected}">
+
+                    <ListView
+                        CachingStrategy="RecycleElement"
+                        GroupHeaderTemplate="{StaticResource GenericGroupHeaderTemplate}"
+                        HasUnevenRows="True"
+                        IsGroupingEnabled="True"
+                        ItemTemplate="{StaticResource MedicationItemTemplate}"
+                        ItemsSource="{Binding ActiveMedications}" />
+                </Grid>
+
+                <!--  List of Future Medications  -->
+                <Grid Grid.Row="1" IsVisible="{Binding IsFutureMedicationsSelected}">
+
+                    <ListView
+                        GroupHeaderTemplate="{StaticResource GenericGroupHeaderTemplate}"
+                        HasUnevenRows="True"
+                        IsGroupingEnabled="True"
+                        ItemTemplate="{StaticResource MedicationItemTemplate}"
+                        ItemsSource="{Binding FutureMedications}" />
+                </Grid>
+
+                <!--  List of Past Medications  -->
+                <Grid Grid.Row="1" IsVisible="{Binding IsPastMedicationsSelected}">
+
+                    <ListView
+                        GroupHeaderTemplate="{StaticResource GenericGroupHeaderTemplate}"
+                        HasUnevenRows="True"
+                        IsGroupingEnabled="True"
+                        ItemTemplate="{StaticResource MedicationItemTemplate}"
+                        ItemsSource="{Binding PastMedications}" />
+                </Grid>
+            </Grid>
+
+            <Grid
+                Grid.Row="3"
+                Padding="10"
+                RowDefinitions="Auto">
+                <Button
+                    Command="{Binding AddMedicationCommand}"
+                    Text="Add Medication" />
+            </Grid>
+        </Grid>
+
+        <ActivityIndicator
+            Grid.Row="0"
+            IsVisible="{Binding IsBusy}"
+            IsRunning="{Binding IsBusy}" />
+    </Grid>
+</ContentPage>

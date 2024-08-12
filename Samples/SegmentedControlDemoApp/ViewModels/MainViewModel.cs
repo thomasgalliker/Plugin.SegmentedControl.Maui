@@ -30,7 +30,6 @@ namespace SegmentedControlDemoApp.ViewModels
             await this.navigationService.PushAsync(page);
         }
 
-
         public IAsyncRelayCommand<string> OpenUrlCommand
         {
             get => this.openUrlCommand ??= new AsyncRelayCommand<string>(this.OpenUrlAsync);

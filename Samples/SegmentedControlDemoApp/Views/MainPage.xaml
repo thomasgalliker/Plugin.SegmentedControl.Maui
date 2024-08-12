@@ -61,6 +61,11 @@
                 CommandParameter="Test4Page"
                 Text="Test 4: SegmentedControl with styles"
                 HorizontalOptions="Fill" />
+            <Button
+                Command="{Binding NavigateToPageCommand}"
+                CommandParameter="Test5Page"
+                Text="Test 5: Test with ListView &amp; Navigation"
+                HorizontalOptions="Fill" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
