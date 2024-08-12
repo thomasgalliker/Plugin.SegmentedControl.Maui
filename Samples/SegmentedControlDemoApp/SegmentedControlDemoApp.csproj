@@ -37,7 +37,7 @@
       IsAppIcon="true"
       Include="Resources\AppIcon\appicon.png"
       Condition="$(TargetFramework.Contains('-ios'))"
-      ForegroundScale="1"
+      ForegroundScale="1.35"
       Resize="True"
       Color="#FFFFFF" />
 
