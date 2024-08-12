@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <OnPlatform x:Key="FontSizeXLarge" x:TypeArguments="x:Double">
+        <On Platform="iOS">23</On>
+        <On Platform="Android">22</On>
+    </OnPlatform>
+
+    <OnPlatform x:Key="FontSizeLarge" x:TypeArguments="x:Double">
+        <On Platform="iOS">19</On>
+        <On Platform="Android">18</On>
+    </OnPlatform>
+
+    <OnPlatform x:Key="FontSizeMedium" x:TypeArguments="x:Double">
+        <On Platform="iOS">16</On>
+        <On Platform="Android">15</On>
+    </OnPlatform>
+
+    <OnPlatform x:Key="FontSizeSmall" x:TypeArguments="x:Double">
+        <On Platform="iOS">12</On>
+        <On Platform="Android">12</On>
+    </OnPlatform>
+
+</ResourceDictionary>

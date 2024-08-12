@@ -6,5 +6,9 @@
     xmlns:c="clr-namespace:ValueConverters;assembly=ValueConverters">
 
     <c:BoolInverter x:Key="BoolInverter" />
+    <c:BoolToImageSourceConverter 
+        x:Key="BoolToCollapseExpandImageConverter"
+        TrueValue="ic_chevron_up" 
+        FalseValue="ic_chevron_down"/>
 
 </ResourceDictionary>
