@@ -21,14 +21,14 @@ namespace Plugin.SegmentedControl.Maui.Utils
             {
                 await Task.Delay(200);
 
-                var navigation = GetNavigation(targetPage);
-                if (navigation != null &&
-                    (navigation.NavigationStack.Any(p => p == targetPage) ||
-                     navigation.ModalStack.Any(p => p == targetPage)))
+                var pagesIsUsed = CheckIfPageIsUsed(targetPage);
+                if (pagesIsUsed)
                 {
                     return;
                 }
 
+                // If the target page is no longer used anywhere,
+                // we can can safely unsubscribe from Unloaded event and call DisconnectHandler.
                 targetPage.Unloaded -= OnPageUnloaded;
 
                 var elementHandler = view.Handler as IElementHandler;
@@ -41,19 +41,73 @@ namespace Plugin.SegmentedControl.Maui.Utils
             targetPage.Unloaded += OnPageUnloaded;
         }
 
-        private static INavigation GetNavigation(Page page)
+        private static bool CheckIfPageIsUsed(Page targetPage)
         {
-            if (Shell.Current?.Navigation is INavigation navigation)
+            // For apps with shell navigation, we check if the target page
+            // is still used in Shell.Current or one of its children.
+            if (Shell.Current is Shell shell)
             {
-                return navigation;
+                var currentPage = WalkToPage(shell);
+                var pages = GetActivePages(shell);
+                var pageExists = pages.Any(p => p == targetPage);
+                return pageExists;
             }
 
-            if (page != null)
+            // For apps with classic navigation, we check the target page
+            // is part of the NavigationStack or the ModalStack.
+            var navigation = targetPage.Navigation;
+            if (navigation != null &&
+                (navigation.NavigationStack.Any(p => p == targetPage) ||
+                 navigation.ModalStack.Any(p => p == targetPage)))
             {
-                return page.Navigation;
+                return true;
             }
 
-            throw new Exception("HandlerCleanUpHelper.GetNavigation could not find INavigation");
+            return false;
+        }
+
+        private static IEnumerable<Page> GetActivePages(Shell shell)
+        {
+            var hashSet = new HashSet<Page>();
+
+            var items = shell.Items.ToArray();
+            foreach (var shellItem in items)
+            {
+                foreach (var page in WalkToPage(shellItem))
+                {
+                    hashSet.Add(page);
+                }
+
+                foreach (var shellSection in shellItem.Items)
+                {
+                    foreach (var page in WalkToPage(shellItem))
+                    {
+                        hashSet.Add(page);
+                    }
+                }
+            }
+
+            return hashSet;
+        }
+
+        private static IEnumerable<Page> WalkToPage(Element element)
+        {
+            switch (element)
+            {
+                case Shell shell:
+                    return WalkToPage(shell.CurrentItem);
+
+                case ShellItem shellItem:
+                    return WalkToPage(shellItem.CurrentItem);
+
+                case ShellSection shellSection:
+
+                    var controller = (IShellSectionController)element;
+                    var children = controller.LogicalChildren.OfType<IShellContentController>();
+                    return children.Select(c => c.Page);
+            }
+
+            return [];
         }
 
         private static IEnumerable<Page> GetRealParentPages(this Element element)
