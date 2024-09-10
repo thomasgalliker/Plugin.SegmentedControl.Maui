@@ -55,6 +55,8 @@ namespace SegmentedControlDemoApp
             builder.Services.AddTransient<Test5ViewModel>();
 
             builder.Services.AddTransient<MedicationDetailPage>();
+            builder.Services.AddTransient<MedicationDetailViewModel>();
+
             builder.Services.AddTransient<Test5DetailPage>();
 
             return builder.Build();

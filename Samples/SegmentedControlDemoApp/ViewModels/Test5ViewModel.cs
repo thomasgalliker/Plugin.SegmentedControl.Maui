@@ -13,6 +13,7 @@ namespace SegmentedControlDemoApp.ViewModels
         private bool isInitialized;
         private int selectedSegment;
         private IAsyncRelayCommand addMedicationCommand;
+        private IAsyncRelayCommand popToRootCommand;
         private IAsyncRelayCommand appearingCommand;
         private ICollection<GroupViewModel<MedicationItemViewModel>> activeMedications;
         private ICollection<GroupViewModel<MedicationItemViewModel>> futureMedications;
@@ -198,6 +199,16 @@ namespace SegmentedControlDemoApp.ViewModels
         private async Task AddMedicationAsync()
         {
             await this.navigationService.PushModalAsync("Test5DetailPage");
+        }
+
+        public IAsyncRelayCommand PopToRootCommand
+        {
+            get => this.popToRootCommand ??= new AsyncRelayCommand(this.PopToRootAsync);
+        }
+
+        private async Task PopToRootAsync()
+        {
+            await this.navigationService.PopToRootAsync();
         }
     }
 }
