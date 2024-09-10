@@ -28,13 +28,22 @@ namespace Plugin.SegmentedControl.Maui.Utils
                 }
 
                 // If the target page is no longer used anywhere,
-                // we can can safely unsubscribe from Unloaded event and call DisconnectHandler.
+                // we can safely unsubscribe from Unloaded event and call DisconnectHandler.
                 targetPage.Unloaded -= OnPageUnloaded;
 
-                var elementHandler = view.Handler as IElementHandler;
-                Debug.WriteLine($"HandlerCleanUpHelper.OnPageUnloaded: Page \"{targetPage.GetType().Name}\" is no longer present on the navigation stack " +
-                                $"--> {(elementHandler != null ? $"{elementHandler.GetType().Name}." : "")}DisconnectHandler()");
-                elementHandler?.DisconnectHandler();
+                if (view.Handler is not IElementHandler elementHandler)
+                {
+                    Debug.WriteLine(
+                        $"HandlerCleanUpHelper.OnPageUnloaded: Page \"{targetPage.GetType().Name}\" is no longer present on the navigation stack " +
+                        $"--> {view.GetType().Name}.Handler is null");
+                }
+                else
+                {
+                    Debug.WriteLine(
+                        $"HandlerCleanUpHelper.OnPageUnloaded: Page \"{targetPage.GetType().Name}\" is no longer present on the navigation stack " +
+                        $"--> {elementHandler.GetType().Name}.DisconnectHandler()");
+                    elementHandler.DisconnectHandler();
+                }
             }
 
             Debug.WriteLine($"HandlerCleanUpHelper.AddCleanUpEvent for Page \"{targetPage.GetType().Name}\"");
