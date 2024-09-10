@@ -1,0 +1,16 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:vms="clr-namespace:SegmentedControlReproduce.ViewModels"
+             x:Class="SegmentedControlReproduce.Views.VowelsView"
+             x:DataType="vms:VowelsViewModel"
+             Title="Vowels">
+    <StackLayout>
+        <Picker
+            Title="View options"
+            ItemsSource="{Binding VowelViewOptions}"
+            SelectedItem="{Binding SelectedVowelViewOption, Mode=TwoWay}"
+            ItemDisplayBinding="{Binding Path=Name}"/>
+        <ContentView Content="{Binding SelectedVowelViewOption.View, Mode=OneWay}"/>
+    </StackLayout>
+</ContentPage>

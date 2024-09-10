@@ -116,12 +116,6 @@
 	  <ProjectReference Include="..\..\Plugin.SegmentedControl.Maui\Plugin.SegmentedControl.Maui.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <MauiXaml Update="Resources\Styles\FontSizes.xaml">
-	    <SubType>Designer</SubType>
-	  </MauiXaml>
-	</ItemGroup>
-
   <Target Name="PrintVariables" BeforeTargets="Build">
     <Message Importance="high" Text="----------------------"/>
     <Message Importance="high" Text="PrintVariables for $(TargetFramework)"/>

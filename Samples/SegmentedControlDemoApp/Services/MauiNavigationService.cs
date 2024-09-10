@@ -21,8 +21,8 @@ namespace SegmentedControlDemoApp.Services
             try
             {
                 var page = this.ResolvePage(pageName);
-
-                await Application.Current.MainPage.Navigation.PushAsync(page);
+                var navigation = GetNavigation();
+                await navigation.PushAsync(page);
             }
             catch (Exception ex)
             {
@@ -36,8 +36,8 @@ namespace SegmentedControlDemoApp.Services
             try
             {
                 var page = this.ResolvePage(pageName);
-
-                await Application.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(page));
+                var navigation = GetNavigation();
+                await navigation.PushModalAsync(new NavigationPage(page));
             }
             catch (Exception ex)
             {
@@ -87,6 +87,36 @@ namespace SegmentedControlDemoApp.Services
             return page;
         }
 
+        private static INavigation GetNavigation()
+        {
+            if (Shell.Current != null)
+            {
+                throw new NotSupportedException(
+                    $"{nameof(MauiNavigationService)} does currently not support AppShell navigation");
+            }
+
+            if (Application.Current?.MainPage is not Page page)
+            {
+                throw new PageNavigationException("Application.Current.MainPage is not set");
+            }
+
+            var targetPage = GetTarget(page);
+            return targetPage.Navigation;
+        }
+
+        private static Page GetTarget(Page target)
+        {
+            return target switch
+            {
+                FlyoutPage flyout => GetTarget(flyout.Detail),
+                TabbedPage tabbed => GetTarget(tabbed.CurrentPage),
+                NavigationPage navigation => GetTarget(navigation.CurrentPage) ?? navigation,
+                ContentPage page => page,
+                null => null,
+                _ => throw new NotSupportedException($"The page type '{target.GetType().FullName}' is not supported.")
+            };
+        }
+
         private static Type[] FindTypesWithName(string typeName)
         {
             return Assembly.GetExecutingAssembly()
@@ -99,7 +129,8 @@ namespace SegmentedControlDemoApp.Services
         {
             try
             {
-                await Application.Current.MainPage.Navigation.PopAsync();
+                var navigation = GetNavigation();
+                await navigation.PopAsync();
             }
             catch (Exception ex)
             {
@@ -108,11 +139,26 @@ namespace SegmentedControlDemoApp.Services
             }
         }
 
+        public async Task PopToRootAsync()
+        {
+            try
+            {
+                var navigation = GetNavigation();
+                await navigation.PopToRootAsync();
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(ex, "PopToRootAsync failed with exception");
+                throw;
+            }
+        }
+
         public async Task PopModalAsync()
         {
             try
             {
-                await Application.Current.MainPage.Navigation.PopModalAsync();
+                var navigation = GetNavigation();
+                await navigation.PopModalAsync();
             }
             catch (Exception ex)
             {

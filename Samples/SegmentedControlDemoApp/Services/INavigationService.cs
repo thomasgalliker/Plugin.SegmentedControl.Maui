@@ -18,6 +18,11 @@
         Task PopAsync();
 
         /// <summary>
+        /// Pops back to the root page of the navigation stack.
+        /// </summary>
+        Task PopToRootAsync();
+
+        /// <summary>
         /// Pops a modal page from the navigation stack.
         /// </summary>
         Task PopModalAsync();
