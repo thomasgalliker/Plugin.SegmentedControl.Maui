@@ -56,7 +56,6 @@ namespace Plugin.SegmentedControl.Maui.Utils
             // is still used in Shell.Current or one of its children.
             if (Shell.Current is Shell shell)
             {
-                var currentPage = WalkToPage(shell);
                 var pages = GetActivePages(shell);
                 var pageExists = pages.Any(p => p == targetPage);
                 return pageExists;
@@ -79,8 +78,7 @@ namespace Plugin.SegmentedControl.Maui.Utils
         {
             var hashSet = new HashSet<Page>();
 
-            var items = shell.Items.ToArray();
-            foreach (var shellItem in items)
+            foreach (var shellItem in shell.Items)
             {
                 foreach (var page in WalkToPage(shellItem))
                 {
@@ -89,7 +87,7 @@ namespace Plugin.SegmentedControl.Maui.Utils
 
                 foreach (var shellSection in shellItem.Items)
                 {
-                    foreach (var page in WalkToPage(shellItem))
+                    foreach (var page in WalkToPage(shellSection))
                     {
                         hashSet.Add(page);
                     }
@@ -110,9 +108,8 @@ namespace Plugin.SegmentedControl.Maui.Utils
                     return WalkToPage(shellItem.CurrentItem);
 
                 case ShellSection shellSection:
-
-                    var controller = (IShellSectionController)element;
-                    var children = controller.LogicalChildren.OfType<IShellContentController>();
+                    IShellSectionController controller = shellSection;
+                    var children = controller.GetItems().OfType<IShellContentController>();
                     return children.Select(c => c.Page);
             }
 
