@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:SegmentedControlDemoApp.ViewModels"
+    xmlns:s="http://plugin.segmentedControl.maui"
+    x:Class="SegmentedControlDemoApp.Views.GenericDetailPage"
+    x:DataType="vm:GenericDetailViewModel">
+    
+    <Grid RowDefinitions="Auto, *, Auto" Padding="16">
+        <s:SegmentedControl
+            Grid.Row="0">
+            <s:SegmentedControl.Children>
+                <s:SegmentedControlOption Text="Tab1" />
+                <s:SegmentedControlOption Text="Tab2" />
+                <s:SegmentedControlOption Text="Tab3" />
+            </s:SegmentedControl.Children>
+        </s:SegmentedControl>
+
+        <VerticalStackLayout
+            Grid.Row="2"
+            Spacing="16">
+            <HorizontalStackLayout>
+                <CheckBox IsChecked="{Binding Animated}"/>
+                <Label Text="{Binding Animated, StringFormat='{}Animated={0}'}" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <Button
+                Command="{Binding PushCommand}"
+                CommandParameter="GenericDetailPage"
+                Text="PushAsync(GenericDetailPage)"/>
+            <Button
+                Command="{Binding PushModalCommand}"
+                CommandParameter="GenericDetailPage"
+                Text="PushModalAsync(GenericDetailPage)"/>
+            <Button
+                Command="{Binding PopCommand}"
+                Text="PopAsync"/>
+            <Button
+                Command="{Binding PopModalCommand}"
+                Text="PopModalAsync"/>
+            <Button
+                Command="{Binding PopToRootCommand}"
+                Text="PopToRootAsync"/>
+            <Button
+                Command="{Binding NavigateCommand}"
+                Text="NavigateAsync"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
