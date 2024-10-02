@@ -7,7 +7,7 @@ namespace SegmentedControlDemoApp.ViewModels
     {
         private readonly INavigationService navigationService;
 
-        private IAsyncRelayCommand navigateMedicationDetailPageCommand;
+        private IAsyncRelayCommand navigateGenericDetailPageCommand;
 
         public MedicationItemViewModel(INavigationService navigationService, string name)
         {
@@ -17,14 +17,14 @@ namespace SegmentedControlDemoApp.ViewModels
 
         public string Name { get; }
 
-        public IAsyncRelayCommand NavigateMedicationDetailPageCommand
+        public IAsyncRelayCommand NavigateGenericDetailPageCommand
         {
-            get => this.navigateMedicationDetailPageCommand ??= new AsyncRelayCommand(this.NavigateToMedicationDetailPageAsync);
+            get => this.navigateGenericDetailPageCommand ??= new AsyncRelayCommand(this.NavigateToGenericDetailPageAsync);
         }
 
-        private async Task NavigateToMedicationDetailPageAsync()
+        private async Task NavigateToGenericDetailPageAsync()
         {
-            await this.navigationService.PushAsync("MedicationDetailPage");
+            await this.navigationService.PushAsync("GenericDetailPage");
         }
     }
 }

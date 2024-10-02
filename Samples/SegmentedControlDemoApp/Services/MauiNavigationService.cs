@@ -16,13 +16,13 @@ namespace SegmentedControlDemoApp.Services
             this.serviceProvider = serviceProvider;
         }
 
-        public async Task PushAsync(string pageName)
+        public async Task PushAsync(string pageName, bool animated = true)
         {
             try
             {
                 var page = this.ResolvePage(pageName);
                 var navigation = GetNavigation();
-                await navigation.PushAsync(page);
+                await navigation.PushAsync(page, animated);
             }
             catch (Exception ex)
             {
@@ -31,13 +31,13 @@ namespace SegmentedControlDemoApp.Services
             }
         }
 
-        public async Task PushModalAsync(string pageName)
+        public async Task PushModalAsync(string pageName, bool animated = true)
         {
             try
             {
                 var page = this.ResolvePage(pageName);
                 var navigation = GetNavigation();
-                await navigation.PushModalAsync(new NavigationPage(page));
+                await navigation.PushModalAsync(new NavigationPage(page), animated);
             }
             catch (Exception ex)
             {
@@ -101,7 +101,16 @@ namespace SegmentedControlDemoApp.Services
             }
 
             var targetPage = GetTarget(page);
-            return targetPage.Navigation;
+            var navigation = targetPage.Navigation;
+
+            if (navigation.ModalStack.Count > 0)
+            {
+                var modalPage = GetTarget(navigation.ModalStack.Last());
+                var modalNavigation = modalPage.Navigation;
+                return modalNavigation;
+            }
+
+            return navigation;
         }
 
         private static Page GetTarget(Page target)
@@ -125,12 +134,12 @@ namespace SegmentedControlDemoApp.Services
                 .ToArray();
         }
 
-        public async Task PopAsync()
+        public async Task PopAsync(bool animated = true)
         {
             try
             {
                 var navigation = GetNavigation();
-                await navigation.PopAsync();
+                await navigation.PopAsync(animated);
             }
             catch (Exception ex)
             {
@@ -139,12 +148,42 @@ namespace SegmentedControlDemoApp.Services
             }
         }
 
-        public async Task PopToRootAsync()
+        public async Task PopToRootAsync(bool recursive = true, bool acrossModals = false, bool animated = true)
         {
             try
             {
                 var navigation = GetNavigation();
-                await navigation.PopToRootAsync();
+
+                var hasModalStack = navigation.ModalStack.Any();
+
+                if (recursive)
+                {
+                    foreach (var page in navigation.NavigationStack.ToArray().Skip(hasModalStack ? 0 : 1).Reverse())
+                    {
+                        if (hasModalStack && navigation.NavigationStack.FirstOrDefault() == page)
+                        {
+                            await page.Navigation.PopModalAsync(animated);
+                        }
+                        else
+                        {
+                            await page.Navigation.PopAsync(animated);
+                        }
+                    }
+                }
+                else
+                {
+                    await navigation.PopToRootAsync(animated);
+                }
+
+                if (acrossModals && hasModalStack)
+                {
+                    if (!recursive)
+                    {
+                        await this.PopModalAsync(animated);
+                    }
+
+                    await this.PopToRootAsync(recursive, acrossModals, animated);
+                }
             }
             catch (Exception ex)
             {
@@ -153,17 +192,84 @@ namespace SegmentedControlDemoApp.Services
             }
         }
 
-        public async Task PopModalAsync()
+        public async Task PopModalAsync(bool animated = true)
         {
             try
             {
                 var navigation = GetNavigation();
-                await navigation.PopModalAsync();
+                await navigation.PopModalAsync(animated);
             }
             catch (Exception ex)
             {
                 this.logger.LogError(ex, "PopModalAsync failed with exception");
                 throw;
+            }
+        }
+
+        public async Task NavigateAsync(string pageName, bool animated = true)
+        {
+            try
+            {
+                var path = pageName.Trim();
+                var isAbsolute = path.StartsWith('/');
+                var segments = path.Split('/', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+                var pages = this.ResolvePagesForSegments(segments.First(), segments.Skip(1)).ToArray();
+
+                var navigation = GetNavigation();
+
+                if (isAbsolute)
+                {
+                    var rootPage = pages.First();
+                    Application.Current.MainPage = rootPage;
+                }
+
+                foreach (var page in pages.Skip(isAbsolute ? 1 : 0))
+                {
+                    await navigation.PushAsync(page, animated);
+                }
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(ex, "PopModalAsync failed with exception");
+                throw;
+            }
+        }
+
+        private IEnumerable<Page> ResolvePagesForSegments(string firstSegment, IEnumerable<string> segments)
+        {
+            if (firstSegment == nameof(NavigationPage))
+            {
+                if (segments.Any())
+                {
+                    var pages = this.ResolvePagesForSegments(segments.First(), segments.Skip(1));
+                    var firstPage = pages.First();
+                    yield return new NavigationPage(firstPage);
+                    foreach (var childPage in pages.Skip(1))
+                    {
+                        yield return childPage;
+                    }
+                }
+                else
+                {
+                    yield return new NavigationPage();
+                }
+
+                yield break;
+            }
+
+            var page = this.ResolvePage(firstSegment);
+            yield return page;
+
+            {
+                if (segments.Any())
+                {
+                    var pages = this.ResolvePagesForSegments(segments.First(), segments.Skip(1));
+                    foreach (var childPage in pages)
+                    {
+                        yield return childPage;
+                    }
+                }
             }
         }
     }

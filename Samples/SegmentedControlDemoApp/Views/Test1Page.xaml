@@ -10,8 +10,8 @@
 
     <ScrollView>
         <VerticalStackLayout
-            Padding="20"
-            Spacing="20"
+            Padding="16"
+            Spacing="16"
             VerticalOptions="Start">
 
             <Label Text="Example with an embedded string array as segment options defined in XAML.&#10;All style properties are left with default values." />
