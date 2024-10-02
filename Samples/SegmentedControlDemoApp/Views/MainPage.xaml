@@ -71,7 +71,12 @@
             <Button
                 Command="{Binding NavigateToPageCommand}"
                 CommandParameter="Test5Page"
-                Text="Test 5: Test with ListView &amp; Navigation"
+                Text="Test 5: Test with ListView"
+                HorizontalOptions="Fill" />
+            <Button
+                Command="{Binding NavigateToPageCommand}"
+                CommandParameter="GenericDetailPage"
+                Text="Test 6: Navigation"
                 HorizontalOptions="Fill" />
         </VerticalStackLayout>
     </ScrollView>

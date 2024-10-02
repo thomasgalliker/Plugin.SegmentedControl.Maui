@@ -48,7 +48,7 @@
                     <Grid
                         Padding="4">
                         <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding NavigateMedicationDetailPageCommand}" />
+                            <TapGestureRecognizer Command="{Binding NavigateGenericDetailPageCommand}" />
                         </Grid.GestureRecognizers>
                         <Label
                             Text="{Binding Name}" />
@@ -153,8 +153,8 @@
                 RowSpacing="16">
                 <Button
                     Grid.Row="0"
-                    Command="{Binding AddMedicationCommand}"
-                    Text="Add Medication" />
+                    Command="{Binding NavigateToDetailPageModalCommand}"
+                    Text="PushModalAsync(GenericDetailPage)" />
                 <Button
                     Grid.Row="1"
                     Command="{Binding PopToRootCommand}"

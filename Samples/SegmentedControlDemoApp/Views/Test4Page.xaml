@@ -8,8 +8,8 @@
 
     <ScrollView>
         <VerticalStackLayout
-            Padding="20"
-            Spacing="20"
+            Padding="16"
+            Spacing="16"
             VerticalOptions="Start">
 
             <Label Text="No style properties are set; use default values:" />
