@@ -40,10 +40,6 @@ namespace Plugin.SegmentedControl.Maui
         {
         }
 
-        public SegmentedControlHandler(IPropertyMapper mapper) : base(mapper ?? Mapper)
-        {
-        }
-
         protected override RadioGroup CreatePlatformView()
         {
             var layoutInflater = LayoutInflater.From(this.Context);
