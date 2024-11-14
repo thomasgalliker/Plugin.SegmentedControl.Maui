@@ -152,19 +152,10 @@ namespace Plugin.SegmentedControl.Maui
 
             if (this.VirtualView.AutoDisconnectHandler)
             {
-                // this.VirtualView.AddCleanUpEvent();
-                this.VirtualView.Loaded += this.VirtualViewOnLoaded;
+                this.VirtualView.AddCleanUpEvent();
             }
 
             radioGroup.CheckedChange += this.RadioGroup_CheckedChange;
-        }
-
-        private void VirtualViewOnLoaded(object sender, EventArgs e)
-        {
-            if (this.VirtualView.AutoDisconnectHandler)
-            {
-                this.VirtualView.AddCleanUpEvent();
-            }
         }
 
         protected override void DisconnectHandler(RadioGroup radioGroup)
