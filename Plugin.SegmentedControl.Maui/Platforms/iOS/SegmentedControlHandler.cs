@@ -31,10 +31,6 @@ namespace Plugin.SegmentedControl.Maui
         {
         }
 
-        public SegmentedControlHandler(IPropertyMapper mapper) : base(mapper ?? Mapper)
-        {
-        }
-
         protected override UISegmentedControl CreatePlatformView()
         {
             var uiSegmentedControl = new UISegmentedControl();
