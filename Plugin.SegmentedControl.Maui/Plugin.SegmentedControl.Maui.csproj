@@ -38,22 +38,23 @@
     <Company>superdev GmbH</Company>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageReleaseNotes>1.4
-- Improved handling for automatic disconnect handler logic
+- Improved handling for automatic disconnect handler logic.
+- Fix for Android segmented control stroke sizes.
 
 1.3
-- Bug fixes
-- Add support for AppShell apps
+- Bug fixes.
+- Add support for AppShell apps.
 
 1.2
-- Children property is no longer public; use ItemsSource instead
-- Improved error handling in SegmentedControlOption
-- Several bug fixes and internal refactorings
+- Children property is no longer public; use ItemsSource instead.
+- Improved error handling in SegmentedControlOption.
+- Several bug fixes and internal refactorings.
 
 1.1
-- Add new properties FontFamily, FontSize, FontAttributes
+- Add new properties FontFamily, FontSize, FontAttributes.
 
 1.0
-- Initial release
+- Initial release.
     </PackageReleaseNotes>
     <Copyright>Copyright $([System.DateTime]::Now.ToString(`yyyy`)) © Thomas Galliker</Copyright>
     <PackageReadmeFile>README.md</PackageReadmeFile>
