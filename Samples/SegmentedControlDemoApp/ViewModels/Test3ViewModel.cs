@@ -17,6 +17,19 @@ namespace SegmentedControlDemoApp.ViewModels
             ];
 
             this.SelectedCountry = this.Countries.First();
+
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                // await Task.Delay(4000);
+                // this.Countries.First().EnglishName = "Updated Country";
+
+                await Task.Delay(4000);
+                this.Countries =
+                [
+                    new CountryItemViewModel("New Country 1", "New Country 1", "CH"),
+                    new CountryItemViewModel("New Country 2", "New Country 2", "CH"),
+                ];
+            });
         }
 
         public CountryItemViewModel[] Countries

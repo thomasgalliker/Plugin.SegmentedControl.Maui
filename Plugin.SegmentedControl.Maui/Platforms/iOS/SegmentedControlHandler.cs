@@ -35,12 +35,18 @@ namespace Plugin.SegmentedControl.Maui
         {
             var uiSegmentedControl = new UISegmentedControl();
             var segmentedControl = this.VirtualView;
+            UpdateSegmentedControl(uiSegmentedControl, segmentedControl);
+            return uiSegmentedControl;
+        }
 
-            // uiSegmentedControl.RemoveAllSegments();
+        private static void UpdateSegmentedControl(UISegmentedControl uiSegmentedControl, SegmentedControl segmentedControl)
+        {
+            uiSegmentedControl.RemoveAllSegments();
 
             for (var i = 0; i < segmentedControl.Children.Count; i++)
             {
-                uiSegmentedControl.InsertSegment(segmentedControl.Children[i].Text, i, false);
+                var segmentedControlOption = segmentedControl.Children[i];
+                uiSegmentedControl.InsertSegment(segmentedControlOption.Text, i, false);
             }
 
             // TODO: Deduplicate assignments
@@ -55,8 +61,6 @@ namespace Plugin.SegmentedControl.Maui
             UpdateTitleTextAttributesSelected(uiSegmentedControl, segmentedControl);
 
             uiSegmentedControl.SelectedSegment = segmentedControl.SelectedSegment;
-
-            return uiSegmentedControl;
         }
 
         protected override void ConnectHandler(UISegmentedControl platformView)
@@ -201,7 +205,8 @@ namespace Plugin.SegmentedControl.Maui
 
         private static void MapChildren(SegmentedControlHandler handler, SegmentedControl segmentedControl)
         {
-            // TODO: Implement
+            var uiSegmentedControl = handler.PlatformView;
+            UpdateSegmentedControl(uiSegmentedControl, segmentedControl);
         }
     }
 }
