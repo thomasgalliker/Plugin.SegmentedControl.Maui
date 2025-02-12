@@ -387,7 +387,7 @@ namespace Plugin.SegmentedControl.Maui
                 segment < this.Children.Count &&
                 this.Children[segment].IsEnabled)
             {
-                SelectedIndexChanged?.Invoke(this, new SelectedIndexChangedEventArgs { NewValue = segment });
+                this.SelectedIndexChanged?.Invoke(this, new SelectedIndexChangedEventArgs { NewValue = segment });
 
                 if (!(this.SegmentSelectedCommand is null) && this.SegmentSelectedCommand.CanExecute(this.SegmentSelectedCommandParameter))
                 {
