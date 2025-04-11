@@ -76,18 +76,36 @@ namespace Plugin.SegmentedControl.Maui.Utils
             {
                 var pages = GetActivePages(shell);
                 var pageExists = pages.Any(p => p == targetPage);
-                return pageExists;
+                if(pageExists) 
+                {
+                    return true;
+                }
             }
 
             // For apps with classic navigation, we check the target page
-            // is part of the NavigationStack or the ModalStack.
+            // is part of the NavigationStack.
             {
                 var mainPage = Application.Current.MainPage;
                 var navigation = mainPage.Navigation;
                 var pages = PageHelper.GetNavigationTree(navigation, mainPage).ToArray();
                 var pageExists = pages.Any(p => p == targetPage);
-                return pageExists;
+                if(pageExists) 
+                {
+                    return true;
+                }
             }
+
+            //Check the Modal page stack.
+            {
+                var modalPages = Application.Current.MainPage.Navigation.ModalStack;
+                var pageExists = modalPages.Any(p => p == targetPage);
+                if(pageExists) 
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private static IEnumerable<Page> GetActivePages(Shell shell)
