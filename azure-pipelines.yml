@@ -97,7 +97,7 @@ steps:
     command: restore
     projects: |
       Plugin.SegmentedControl.Maui/**/*.csproj
-      Tests/**/*.Tests.csproj'
+      Tests/**/*.Tests.csproj
 
 - task: DotNetCoreCLI@2
   displayName: 'Build projects'
