@@ -21,28 +21,30 @@ namespace Plugin.SegmentedControl.Maui.Utils
         {
             var mainPage = Application.Current.MainPage;
             var navigation = mainPage.Navigation;
-            var pages = GetNavigationTree(navigation, mainPage).ToArray();
+            var pages = GetNavigationTree(mainPage).ToArray();
             var navigationPath = PrintNavigationPath(pages);
             return navigationPath;
         }
 
         private static string PrintNavigationPath(IEnumerable<Page> pages)
         {
-            return pages.Aggregate("", (current, page) => $"{current}/{(page?.GetType().Name ?? "")}");
+            return pages.Aggregate("", (current, page) => $"{current}/{page?.GetType().Name ?? ""}");
         }
 
-        internal static IEnumerable<Page> GetNavigationTree(INavigation navigation, Page page, bool modal = false)
+        internal static IEnumerable<Page> GetNavigationTree(Page page, bool modal = false)
         {
+            var navigation = page.Navigation;
+
             switch (page)
             {
                 case FlyoutPage flyoutPage:
                     yield return flyoutPage;
-                    foreach (var p in GetNavigationTree(flyoutPage.Flyout.Navigation, flyoutPage.Flyout))
+                    foreach (var p in GetNavigationTree(flyoutPage.Flyout))
                     {
                         yield return p;
                     }
 
-                    foreach (var p in GetNavigationTree(flyoutPage.Detail.Navigation, flyoutPage.Detail))
+                    foreach (var p in GetNavigationTree(flyoutPage.Detail))
                     {
                         yield return p;
                     }
@@ -51,7 +53,7 @@ namespace Plugin.SegmentedControl.Maui.Utils
 
                 case TabbedPage tabbedPage:
                     yield return tabbedPage;
-                    foreach (var p in GetNavigationTree(tabbedPage.CurrentPage.Navigation, tabbedPage.CurrentPage))
+                    foreach (var p in GetNavigationTree(tabbedPage.CurrentPage))
                     {
                         yield return p;
                     }
@@ -77,7 +79,7 @@ namespace Plugin.SegmentedControl.Maui.Utils
             {
                 foreach (var modalPage in navigation.ModalStack)
                 {
-                    foreach (var p in GetNavigationTree(modalPage.Navigation, modalPage, modal: true))
+                    foreach (var p in GetNavigationTree(modalPage, modal: true))
                     {
                         yield return p;
                     }

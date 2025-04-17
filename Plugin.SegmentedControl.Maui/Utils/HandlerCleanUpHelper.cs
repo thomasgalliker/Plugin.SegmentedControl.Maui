@@ -83,8 +83,7 @@ namespace Plugin.SegmentedControl.Maui.Utils
             // is part of the NavigationStack or the ModalStack.
             {
                 var mainPage = Application.Current.MainPage;
-                var navigation = mainPage.Navigation;
-                var pages = PageHelper.GetNavigationTree(navigation, mainPage).ToArray();
+                var pages = PageHelper.GetNavigationTree(mainPage).ToArray();
                 var pageExists = pages.Any(p => p == targetPage);
                 return pageExists;
             }
