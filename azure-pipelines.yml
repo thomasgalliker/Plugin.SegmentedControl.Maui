@@ -104,7 +104,7 @@ steps:
   inputs:
     projects: |
       Plugin.SegmentedControl.Maui/**/*.csproj
-      Tests/**/*.Tests.csproj'
+      Tests/**/*.Tests.csproj
     arguments: '--no-restore --configuration $(buildConfiguration)'
     
 - task: DotNetCoreCLI@2
