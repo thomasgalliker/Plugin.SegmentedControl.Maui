@@ -33,6 +33,11 @@ namespace Plugin.SegmentedControl.Maui.Utils
 
         internal static IEnumerable<Page> GetNavigationTree(Page page, bool modal = false)
         {
+            if (page == null)
+            {
+                yield break;
+            }
+
             var navigation = page.Navigation;
 
             switch (page)
