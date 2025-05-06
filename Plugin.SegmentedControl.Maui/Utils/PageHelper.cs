@@ -53,9 +53,12 @@ namespace Plugin.SegmentedControl.Maui.Utils
 
                 case TabbedPage tabbedPage:
                     yield return tabbedPage;
-                    foreach (var p in GetNavigationTree(tabbedPage.CurrentPage))
+                    foreach (var tab in tabbedPage.Children)
                     {
-                        yield return p;
+                        foreach (var p in GetNavigationTree(tab))
+                        {
+                            yield return p;
+                        }
                     }
 
                     break;
