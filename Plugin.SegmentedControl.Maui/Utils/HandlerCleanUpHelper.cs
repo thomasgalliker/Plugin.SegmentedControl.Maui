@@ -15,8 +15,22 @@ namespace Plugin.SegmentedControl.Maui.Utils
                 return;
             }
 
+            var viewName = view.GetType().Name;
+            var viewNameWithAutomationId = string.IsNullOrWhiteSpace(view.AutomationId)
+                ? viewName
+                : $"\"{view.AutomationId}\" ({viewName})";
+
             var parentPage = element.GetRealParentPages().FirstOrDefault();
             var targetPage = PageHelper.GetTarget(parentPage);
+            if (targetPage == null)
+            {
+                Trace.WriteLine(
+                    "HandlerCleanUpHelper.AddCleanUpEvent: RealParent is not a Page. " +
+                    $"Make sure you call {viewName}.Handler.DisconnectHandler() manually as soon as " +
+                    $"{viewNameWithAutomationId} is no longer used!");
+
+                return;
+            }
 
             async void OnDisappearing(object sender, EventArgs e)
             {
@@ -40,7 +54,7 @@ namespace Plugin.SegmentedControl.Maui.Utils
                 {
                     Trace.WriteLine(
                         $"HandlerCleanUpHelper.OnNavigatedFrom: Page \"{GetPageNameForLogging(targetPage)}\" is no longer present on the navigation stack " +
-                        $"--> {view.GetType().Name}.Handler is null");
+                        $"--> {viewName}.Handler is null");
                 }
                 else
                 {
@@ -53,7 +67,8 @@ namespace Plugin.SegmentedControl.Maui.Utils
 
             targetPage.Disappearing += OnDisappearing;
 
-            Trace.WriteLine($"HandlerCleanUpHelper.AddCleanUpEvent for \"{view.GetType().Name}\" on page \"{GetPageNameForLogging(targetPage)}\"");
+            Trace.WriteLine(
+                $"HandlerCleanUpHelper.AddCleanUpEvent for {viewNameWithAutomationId} on page \"{GetPageNameForLogging(targetPage)}\"");
         }
 
         private static string GetPageNameForLogging(Page targetPage)
