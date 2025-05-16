@@ -16,7 +16,7 @@
 
             <Label Text="Example with an embedded string array as segment options defined in XAML.&#10;All style properties are left with default values." />
 
-            <s:SegmentedControl>
+            <s:SegmentedControl AutomationId="SegmentedControl1">
                 <s:SegmentedControl.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
                         <x:String>Tab 1</x:String>
@@ -28,7 +28,7 @@
 
             <Label Text="Example with an array of SegmentedControlOptions set as ItemsSource." />
 
-            <s:SegmentedControl>
+            <s:SegmentedControl AutomationId="SegmentedControl2">
                 <s:SegmentedControl.ItemsSource>
                     <x:Array Type="{x:Type s:SegmentedControlOption}">
                         <s:SegmentedControlOption Text="Tab1" />
@@ -42,6 +42,7 @@
 
             <s:SegmentedControl
                 x:Name="SegmentedControl"
+                AutomationId="SegmentedControl3"
                 ChildrenChanging="SegmentedControl_ChildrenChanging"
                 SelectedIndexChanged="SegmentedControl_SelectedIndexChanged"
                 WidthRequest="160"
