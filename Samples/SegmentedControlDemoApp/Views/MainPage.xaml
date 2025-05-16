@@ -5,8 +5,8 @@
     xmlns:controls="clr-namespace:SegmentedControlDemoApp.Controls"
     xmlns:vm="clr-namespace:SegmentedControlDemoApp.ViewModels"
     x:Class="SegmentedControlDemoApp.Views.MainPage"
-    Title="SegmentedControl .NET MAUI"
-    x:DataType="vm:MainViewModel">
+    x:DataType="vm:MainViewModel"
+    Title="SegmentedControl .NET MAUI">
 
     <ContentPage.Resources>
         <ResourceDictionary />
@@ -24,23 +24,20 @@
                     Grid.Column="0"
                     Source="logo.png"
                     HeightRequest="100" />
-                <Label
-                    Grid.Column="1">
+                <Label Grid.Column="1">
                     <Label.FormattedText>
                         <FormattedString>
+                            <Span Text="This sample app is used to demonstrate and test the main features of the nuget package " />
                             <Span
-                                Text="This sample app is used to demonstrate and test the main features of the nuget package " />
-                            <Span
-                                Text="Plugin.SegmentedControl.Maui"
-                                Style="{StaticResource HyperlinkSpanStyle}">
+                                Style="{StaticResource HyperlinkSpanStyle}"
+                                Text="Plugin.SegmentedControl.Maui">
                                 <Span.GestureRecognizers>
                                     <TapGestureRecognizer
                                         Command="{Binding OpenUrlCommand}"
-                                        CommandParameter="https://www.nuget.org/packages/Plugin.SegmentedControl.Maui"/>
+                                        CommandParameter="https://www.nuget.org/packages/Plugin.SegmentedControl.Maui" />
                                 </Span.GestureRecognizers>
                             </Span>
-                            <Span
-                                Text="." />
+                            <Span Text="." />
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
@@ -77,6 +74,11 @@
                 Command="{Binding NavigateToPageCommand}"
                 CommandParameter="GenericDetailPage"
                 Text="Test 6: Navigation"
+                HorizontalOptions="Fill" />
+            <Button
+                Command="{Binding NavigateToPageCommand}"
+                CommandParameter="TabbedMainPage"
+                Text="Test 7: TabbedPage"
                 HorizontalOptions="Fill" />
         </VerticalStackLayout>
     </ScrollView>

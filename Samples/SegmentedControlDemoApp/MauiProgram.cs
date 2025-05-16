@@ -38,6 +38,8 @@ namespace SegmentedControlDemoApp
             builder.Services.AddSingleton<ILauncher>(_ => Launcher.Default);
 
             // Register pages and view models
+            builder.Services.AddTransient<TabbedMainPage>();
+
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<MainViewModel>();
 

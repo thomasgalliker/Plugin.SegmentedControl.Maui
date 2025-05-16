@@ -9,6 +9,7 @@ namespace SegmentedControlDemoApp
             this.InitializeComponent();
 
             var mainPage = serviceProvider.GetRequiredService<MainPage>();
+            // var mainPage = serviceProvider.GetRequiredService<TabbedMainPage>();
             this.MainPage = new NavigationPage(mainPage);
         }
     }
