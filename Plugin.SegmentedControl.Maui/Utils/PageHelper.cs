@@ -1,5 +1,3 @@
-using System.ComponentModel;
-
 namespace Plugin.SegmentedControl.Maui.Utils
 {
     internal static class PageHelper
@@ -20,7 +18,6 @@ namespace Plugin.SegmentedControl.Maui.Utils
         internal static string PrintNavigationPath()
         {
             var mainPage = Application.Current.MainPage;
-            var navigation = mainPage.Navigation;
             var pages = GetNavigationTree(mainPage).ToArray();
             var navigationPath = PrintNavigationPath(pages);
             return navigationPath;
