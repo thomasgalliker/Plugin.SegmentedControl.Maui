@@ -22,7 +22,6 @@ trigger:
     - Docs/*
 
 variables:
-  solution: 'Plugin.SegmentedControl.Maui.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   majorVersion: 1
@@ -65,7 +64,7 @@ steps:
     PackageVersion: '$(Build.BuildNumber)'
     LogLevel: 'verbose'
     FailOnWarning: false
-    DisableTelemetry: false'
+    DisableTelemetry: true
     
 - task: UseDotNet@2
   displayName: 'Use .NET 8.x'
@@ -96,22 +95,26 @@ steps:
   displayName: 'NuGet restore'
   inputs:
     command: restore
-    projects: '$(solution)'
+    projects: |
+      Plugin.SegmentedControl.Maui/**/*.csproj
+      Tests/**/*.Tests.csproj
 
 - task: DotNetCoreCLI@2
-  displayName: 'Build solution'
+  displayName: 'Build projects'
   inputs:
-    projects: '$(solution)'
+    projects: |
+      Plugin.SegmentedControl.Maui/**/*.csproj
+      Tests/**/*.Tests.csproj
     arguments: '--no-restore --configuration $(buildConfiguration)'
     
 - task: DotNetCoreCLI@2
   displayName: 'Run UnitTests'
   inputs:
     command: test
-    projects: '**/*.Tests.csproj'
+    projects: 'Tests/**/*.Tests.csproj'
     arguments: '--no-restore --no-build --configuration $(buildConfiguration) /p:CollectCoverage=true /p:Exclude="[Microsoft*]*%2C[Mono*]*%2C[xunit*]*%2C[*.Testdata]*" /p:CoverletOutput=UnitTests.coverage.cobertura.xml /p:MergeWith=$(Build.SourcesDirectory)/Tests/CoverletOutput/coverage.json /p:CoverletOutputFormat=cobertura'
     
-- task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
+- task: reportgenerator@5
   displayName: 'Create Code Coverage Report'
   inputs:
     reports: '$(Build.SourcesDirectory)/Tests/**/*.coverage.cobertura*.xml'
@@ -132,14 +135,12 @@ steps:
   displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
   inputs:
     SourceFolder: '$(system.defaultworkingdirectory)'
-
     Contents: |
-     **\bin\$(BuildConfiguration)\**
-     **\bin\*.nupkg
-
+      **\bin\*.nupkg
+      **\bin\*.snupkg
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
      
-- task: PublishCodeCoverageResults@1
+- task: PublishCodeCoverageResults@2
   displayName: 'Publish code coverage'
   inputs:
     codeCoverageTool: Cobertura

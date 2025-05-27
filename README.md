@@ -1,6 +1,6 @@
 # SegmentedControl for .NET MAUI
 
-[![Version](https://img.shields.io/nuget/v/Plugin.SegmentedControl.Maui.svg)](https://www.nuget.org/packages/Plugin.SegmentedControl.Maui)  [![Downloads](https://img.shields.io/nuget/dt/Plugin.SegmentedControl.Maui.svg)](https://www.nuget.org/packages/Plugin.SegmentedControl.Maui)
+[![Version](https://img.shields.io/nuget/v/Plugin.SegmentedControl.Maui.svg)](https://www.nuget.org/packages/Plugin.SegmentedControl.Maui) [![Downloads](https://img.shields.io/nuget/dt/Plugin.SegmentedControl.Maui.svg)](https://www.nuget.org/packages/Plugin.SegmentedControl.Maui) [![Buy Me a Coffee](https://img.shields.io/badge/support-buy%20me%20a%20coffee-FFDD00)](https://buymeacoffee.com/thomasgalliker)
 
 This library provides a segmented control for .NET MAUI apps using native platform APIs.
 
