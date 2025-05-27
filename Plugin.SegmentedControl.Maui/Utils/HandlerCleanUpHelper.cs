@@ -109,7 +109,7 @@ namespace Plugin.SegmentedControl.Maui.Utils
                 }
             }
 
-            return hashSet;
+            return hashSet.Where(p => p != null);
         }
 
         private static IEnumerable<Page> WalkToPage(Element element)
@@ -125,7 +125,10 @@ namespace Plugin.SegmentedControl.Maui.Utils
                 case ShellSection shellSection:
                     IShellSectionController controller = shellSection;
                     var children = controller.GetItems().OfType<IShellContentController>();
-                    return children.Select(c => c.Page);
+                    var childPages = children
+                        .Select(c => c.Page)
+                        .SelectMany(p => PageHelper.GetNavigationTree(p));
+                    return childPages;
             }
 
             return [];
